@@ -17,4 +17,5 @@ urlpatterns = [
     path('manager', views.manager, name='manager'),
     path('', views.index, name=''),
     path('Authentication', views.Authentication, name='Authentication'),
+    path('Authentication/login-manager', views.managerlogin, name='Authentication/login-manager'),
 ]

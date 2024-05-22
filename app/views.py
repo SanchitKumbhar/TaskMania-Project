@@ -16,6 +16,9 @@ from app.models import *
 
 # Create your views here.
 
+def managerlogin(request):
+    return render(request,"loginpage-manager.html")
+
 def index(request):
     if request.user.is_anonymous:
         return render(request, 'index.html')
