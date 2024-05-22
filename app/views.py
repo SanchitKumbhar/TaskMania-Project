@@ -26,6 +26,10 @@ def index(request):
             return redirect('/manager_panel')
 
 
+def Authentication(request):
+    return render(request,"Authenticate.html")
+
+
 def signup_mamanger(request):
     if request.method == 'POST':
         uname = request.POST.get('username')
