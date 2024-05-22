@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TASKMANIA</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Resetting default margin and padding */
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #2980b9;
+            /* Navbar background color */
+            color: #fff;
+            /* Navbar text color */
+            padding: 10px 0;
+            /* Padding top and bottom */
+        }
+
+        .container {
+            max-width: 1200px;
+            /* Max width for the content */
+            margin: 0 auto;
+            /* Center the content horizontally */
+            padding: 0 20px;
+            /* Padding left and right */
+            display: flex;
+            /* Use flexbox for layout */
+            justify-content: space-between;
+            /* Align items to the edges */
+            align-items: center;
+            /* Center items vertically */
+        }
+
+        .navbar-brand {
+            margin: 0;
+            font-size: 24px;
+            /* Navbar brand font size */
+        }
+
+        .navbar-items {
+            display: flex;
+            /* Use flexbox for layout */
+            align-items: center;
+            /* Center items vertically */
+        }
+
+        .username {
+            margin-right: 10px;
+            /* Margin between username and logout button */
+            font-weight: bold;
+            /* Bold font for username */
+        }
+
+        .logout-btn {
+            color: #fff;
+            /* Logout button text color */
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            background-color: #c0392b;
+            /* Logout button background color */
+            transition: background-color 0.3s ease;
+            /* Smooth hover effect */
+        }
+
+        .logout-btn:hover {
+            background-color: #e74c3c;
+            /* Hover background color */
+        }
+
+        /* Content styles */
+        .content {
+            max-width: 1200px;
+            /* Max width for the content */
+            margin: 20px auto;
+            /* Center the content horizontally with some margin */
+        }
+
+        .task-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .task-table th,
+        .task-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .task-table th {
+            background-color: #f2f2f2;
+            /* Header background color */
+            font-weight: bold;
+        }
+
+        .task-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+            /* Alternate row background color */
+        }
+
+        .task-table button {
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #3498db;
+            /* Button background color */
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .task-table button:hover {
+            background-color: #2980b9;
+            /* Hover background color */
+        }
+
+        /* Footer styles */
+        .footer {
+            background-color: #333;
+            /* Footer background color */
+            color: #fff;
+            /* Footer text color */
+            padding: 10px 0;
+            /* Padding top and bottom */
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <b>
+                <h1 class="navbar-brand">TASKMANIA</h1>
+            </b>
+            <div class="navbar-items">
+                <span class="username">{{request.user}}</span>
+                <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+            </div>
+        </div>
+    </nav>
+    <div class="content">
+        <h2>Tasks</h2>
+        <table class="task-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Task Name</th>
+                    <th>Due Date</th>
+                    <th>Due Time</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in data %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.task}}</td>
+                    <td>{{i.date}}</td>
+                    <td>{{i.Time}}</td>
+                    {% if i.status %}
+                    <td>Done</td>
+                    {% else %}
+                    <td><a href="/taskdone/{{i.id}}"><button>Submit</button></a></td>
+                    {% endif %}
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- Your content goes here -->
+    <!-- <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 To-Do List App</p>
+        </div> -->
+    </footer>
+</body>
+
+</html>

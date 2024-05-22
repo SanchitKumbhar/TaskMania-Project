@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visualization Page</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 960px;
+  margin: 5px auto;
+  padding: 0 15px;
+}
+
+.navbar {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 0;
+}
+
+.navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-brand {
+  font-size: 24px;
+  margin-left: 15px; /* Added margin to separate from the edge */
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-right: 15px; /* Added margin to separate from the edge */
+}
+
+.username {
+  margin-right: 10px;
+}
+
+.logout-btn {
+  color: #fff;
+  text-decoration: none;
+  background-color: #007bff;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.logout-btn:hover {
+  background-color: #0056b3;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table th, table td {
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+table th {
+  background-color: #f0f0f0;
+}
+
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <span class="navbar-brand">To-Do List App</span>
+      <div class="user-info">
+        <span class="username">{{request.user}}</span>
+        <a href="/logout" class="logout-btn">Logout</a>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <h1>Data Visualization</h1>
+    <table>
+      <thead>
+          <tr>
+              <th>ID</th>
+              <th>Employee</th>
+              <th>Task Name</th>
+              <th>Due Date</th>
+              <th>Due Time</th>
+              <th>Submit Date</th>
+              <th>Submit Time</th>
+              <th>Status</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for i in data %}
+          <tr>
+              <td>{{forloop.counter}}</td>
+              <td>{{i.user}}</td>
+              <td>{{i.task}}</td>
+              <td>{{i.date}}</td>
+              <td>{{i.Time}}</td>
+              <td>{{i.emp_date}}</td>
+              <td>{{i.emp_Time}}</td>
+              {% if i.status %}
+                {% if i.emp_date < i.date %}
+              <td>Intime</td>
+              {% elif i.emp_date == i.date %}
+              {% if i.emp_Time == i.Time %}
+              <td>Intime</td>
+              {% elif i.emp_Time < i.Time %}
+              <td>Intime</td>
+              {% else %}
+              <td>Not Intime</td>
+              {% endif %}
+              {% else %}
+              <td>Not Intime</td>  
+              {% endif %}
+                 {% else %}
+                 <td>Not Submitted</td>
+              {% endif %}
+
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+  </div>
+</body>
+</html>
