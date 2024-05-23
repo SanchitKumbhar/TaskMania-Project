@@ -82,20 +82,27 @@ div>div>div.gap-3>i:last-child{
 
 <body>
   <div class="d-md-flex d-sm-block col-xl-8 col-lg-12 col-md-12 shadow-lg bg-body-tertiary rounded-4 m-auto div-main">
+    
     <div class="col-md-6 col-sm-12 p-5 p-2 py-5 d-grid text-center">
+      <form action="/credentials-login" method="post">
+        {% csrf_token %}
       <h3 class="title">WELCOME TO</h3>
       <h1 class="mb-4">
         <span class="tile-inf">ꝎINF<span class="title-inity">INITY</span></span>
       </h1>
       <div class="form-floating">
-        <input type="email" class="col-md-9 col-sm-11 pl-3 mb-3 form-control rounded" id="floatingInput" placeholder="name@example.com" />
+        <input type="text" class="col-md-9 col-sm-11 pl-3 mb-3 form-control rounded" id="floatingInput" placeholder="Username" name="username" />
+        <label for="floatingInput">Username</label>
+      </div>
+      <div class="form-floating">
+        <input type="email" class="col-md-9 col-sm-11 pl-3 mb-3 form-control rounded" id="floatingInput" placeholder="name@example.com" name="Email" />
         <label for="floatingInput">Email address</label>
       </div>
       <div class="form-floating">
-        <input type="password" class="col-md-9 col-sm-11 pl-3 mb-3 form-control rounded" id="floatingPassword" placeholder="Password" />
+        <input type="password" class="col-md-9 col-sm-11 pl-3 mb-3 form-control rounded" id="floatingPassword" placeholder="Password" name="Password" />
         <label for="floatingPassword">Password</label>
       </div>
-      <button type="button" class="py-2 mb-3 w-100 btn btn-danger">
+      <button  type="submit" class="py-2 mb-3 w-100 btn btn-danger">
         SIGN IN
       </button>
       <p>
@@ -118,8 +125,11 @@ div>div>div.gap-3>i:last-child{
           ut pretium ligula.
         </h6>
       </div>
+    </form>
     </div>
+
   </div>
+
 </body>
 
 </html>

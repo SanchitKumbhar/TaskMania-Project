@@ -16,21 +16,38 @@ from app.models import *
 
 # Create your views here.
 
-def managerlogin(request):
-    return render(request,"loginpage-manager.html")
+def managerloginpage(request):
+    return render(request, "loginpage-manager.html")
+
 
 def index(request):
-    if request.user.is_anonymous:
-        return render(request, 'index.html')
-    else:
-        if not request.user.is_staff:
-            return redirect('/employee_panel')
-        else:
-            return redirect('/manager_panel')
+    # if request.user.is_anonymous:
+    return render(request, 'index.html')
+    # else:
+    #     if not request.user.is_staff:
+    #         return redirect('/employee_panel')
+    #     else:
+    #         return redirect('/manager_panel')
 
 
 def Authentication(request):
-    return render(request,"Authenticate.html")
+    return render(request, "Authenticate.html")
+
+
+def managerlogin(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        Email = request.POST.get('Email')
+        Password = request.POST.get('Password')
+
+        # check if user has entered correct credentials
+        user = authenticate(username=username, password=Password)
+
+        if user is not None:
+            # A backend authenticated the credentials
+            login(request, user)
+            # return redirect('/manager_panel')
+            return HttpResponse("Loged in")
 
 
 def signup_mamanger(request):
@@ -60,11 +77,11 @@ def signup_employee(request):
         # fileobj = FileSystemStorage()
         # filepathname = fileobj.save(uploaded_file.name, uploaded_file)
         user = User.objects.create_user(uname, eml, passcode)
- 
+
         user.save()
-        
+
         login(request, user)
-        Employeee_Pircture(file=uploaded_file,user=request.user).save()
+        Employeee_Pircture(file=uploaded_file, user=request.user).save()
         return redirect('employee_panel')
     else:
         return redirect('employee')
@@ -104,7 +121,6 @@ def loginuser_manager(request):
             # A backend authenticated the credentials
             login(request, user)
             return redirect('/manager_panel')
-
 
 
 def logoutuser(request):
@@ -201,35 +217,37 @@ def visualization(request):
             # filepathname = fileobj.url(filepathname)
             data = Todo.objects.filter()
             non_staff_users = User.objects.filter(is_staff=False)
-       
+
     return render(request, 'Emptable.html', {'data': non_staff_users})
+
 
 def count_status(subuser):
     checkbox_data = Todo.objects.filter(user=subuser)
 
     # Initialize counters
-    true_counter=0
-    false_counter=0
+    true_counter = 0
+    false_counter = 0
     # Count True and False values for each checkbox
     for data in checkbox_data:
         if data.status == True:
-            true_counter+=1
+            true_counter += 1
         else:
-            false_counter+=1
-    return true_counter,false_counter
-    
+            false_counter += 1
+    return true_counter, false_counter
 
-def subvisualization(request,username):
+
+def subvisualization(request, username):
     subuser = User.objects.get(username=username)
-    status=Todo.objects.filter(user=subuser)
+    status = Todo.objects.filter(user=subuser)
     # user_images = Employeee_Pircture.objects.filter(user=subuser)
-    file_obj = Employeee_Pircture.objects.get(user=subuser)  
-    file_path = file_obj.file.url    
+    file_obj = Employeee_Pircture.objects.get(user=subuser)
+    file_path = file_obj.file.url
     user_data = Todo.objects.filter(user=subuser)
-    
+
     # status count
-    true,false=count_status(subuser)
-    return render(request,"dashboard.html", {'user' : subuser,'status' : status,'profilepath':file_path,'task':user_data,'true':true,'false':false})
+    true, false = count_status(subuser)
+    return render(request, "dashboard.html", {'user': subuser, 'status': status, 'profilepath': file_path, 'task': user_data, 'true': true, 'false': false})
+
 
 def employee(request):
     return render(request, 'employee.html')
