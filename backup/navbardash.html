@@ -1,126 +1,348 @@
-<!DOCTYPE html>
-<html lang="en">
 
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DashBoard</title>
-{% load static %}
-    <!-- 
-    - custom css link
-  -->
-    <link rel="stylesheet" href="{% static "css/style2.css" %}">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>toDOList</title>
+  <style>
+    /* css normalize */
+* {	
+	list-style-type: none;
+	box-sizing: border-box;
+	font-family: sans-serif;
+	outline: none;
+}
 
-    <!-- 
-    - google font link
-  -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;900&display=swap"
-        rel="stylesheet">
+/* layout */
+body {
+	padding:15px;
+	background: #d1d1d1;
+	}
 
-    <!-- 
-    - material icon link
-  -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-        rel="stylesheet" />
+main {
+	max-width: 704px;
+	min-height:70vh;
+	margin: 0 auto;	
+	background: #fbfbfb;
+	border: 15px solid #e8e8e8;
+	
+}
+/* set common classes */
+.container {
+	padding: 30px;
+}
+
+.btn {
+	transition: background .3s ease;
+	text-transform: uppercase;
+	color: #fff;
+}
+.btn:active{
+	transform: scale(.96);
+}
+
+
+.btn.disabled,
+.btn.disabled:hover {
+	background-color: #c9c9c9;
+	border-color:#99a1a7;
+	cursor: not-allowed;
+}
+
+/* animation */
+
+.addTask {
+	transition: transform .3s cubic-bezier(0,1.15,.83,1.11)
+}
+.addTask.start{
+	transform: scale(.1);
+}
+/* 
+at the moment this stage is not needed but might be
+useful in the future
+
+
+.addTask.end{
+	transform: scale(1);
+}
+ */
+
+.removeTask{
+	transition: transform .3s cubic-bezier(.95,-0.22,1,1);
+	transform: scale(0);
+}
+
+
+
+/* task form / input */
+#task-form{
+	text-align: right;
+}
+
+label {
+	width: 19%;
+	text-align: left;
+	line-height: 3;
+	vertical-align: top;
+	display: inline-block;
+	text-transform: capitalize;
+}
+
+textarea,
+input[name=title]{
+	
+	width: 80%;
+	padding: 10px 5px;
+	margin-bottom: 24px;
+	display: inline-block;
+	font-size: 1.2em;
+	font-family: monospace;
+	
+}
+input[name=title]{
+	
+}
+
+textarea{
+	resize: none;
+	height:84px;
+}
+
+input[type=submit]{
+	
+  	color: #fff;
+  	padding: 8px 36px;
+	background-color: #2E82ED;
+	border: 1px solid #253e6c;
+  	text-transform: uppercase;
+}
+input[type=submit]:hover{
+	background-color: #2667b7;
+}
+	
+/* task list / output */
+
+/* nav */
+
+nav button {
+	padding: 8px 4px;
+	border: 1px solid #54a859;
+	background-color:#8cda91;
+}
+
+nav button:hover{
+	background-color:#70d176;
+}
+
+/* task */
+
+ul{
+	padding: 0;
+}
+
+li {
+	overflow: auto;
+	margin: 30px 0;
+	font-size: 1rem;
+	position: relative;
+	padding: 10px 25px;
+	clear:both;
+	word-wrap: break-word;
+	border: 1px solid #c9c9c9;
+	background-color: #f2f9ff;
+}
+
+li h3 {
+	font-size: .9em;
+	line-height: 1.4;
+	display: inline-block;
+	text-transform: uppercase;
+	text-decoration: underline;
+}
+
+
+li time {
+	float: right;
+    margin: 15px 0;
+	font-size: 0.8em;
+}
+
+li p {
+	font-size: .9em;
+	line-height: 2;
+	margin: 0 0 30px 0px;
+	border-top: 1px solid #d6d6d6;
+}
+
+li hr {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom:30px;
+}
+
+li button {
+	float: right;
+	border: none;
+	color: #ea2424;
+	font-weight: bold;
+	background: transparent;
+	text-transform: uppercase;
+}
+
+
+.completed {
+	text-decoration: line-through;
+	background-color: #e3ffcc; 
+}
+
+/* found on:
+http://www.inserthtml.com/2012/06/custom-form-radio-checkbox/ 
+*/
+.med-checkbox {
+	outline:none;
+	-webkit-appearance: none;
+	background-color: #fafafa;
+	border: 1px solid #cacece;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+	padding: 12px;
+	margin: -8px 0;
+	border-radius: 3px;
+	display: inline-block;
+	position: relative;
+}
+
+.med-checkbox:active, .med-checkbox:checked:active {
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+}
+
+.med-checkbox:checked {
+	
+	background-color: #e9ecee;
+	border: 1px solid #adb8c0;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), 
+		inset 0px -15px 10px -12px rgba(0,0,0,0.05), 
+		inset 15px 10px -12px rgba(255,255,255,0.1);
+	
+	color: #99a1a7;
+}
+
+.med-checkbox:checked:after {
+	content: '\2714';
+	font-size: 33px;
+	position: absolute;
+	top: -16px;
+    left: 3px;
+    color: #36db41;
+}
+
+
+/* media query - form */
+
+@media all and (max-width: 490px){
+	
+	/*layout*/
+	
+	body{
+		padding:0;
+	}
+	
+	.container{
+		padding:12px;
+	}
+	
+	/* task form / input */
+	#task-form{
+		text-align: initial;
+	}
+	
+	label{
+		width: auto;
+		display:block;
+	}
+	
+	 textarea,
+	input[name=title]{
+		width: 100%;
+		margin-bottom:0;
+	} 
+	
+	input[type=submit]{
+		line-height: 2;
+    	margin-top: 15px;
+	}
+	
+	/* task list / output */
+	
+	li h3 {
+		display:block;
+	}
+	
+	li time {
+		float: none; 
+		margin: 5px 0;
+		display: block;
+		font-size: 0.7em;
+	}
+	
+	li p {
+		padding: 10px 0px;
+	}
+	
+}
+
+  </style>
 </head>
-
 <body>
-    <header class="header" data-header>
-        <div class="container">
+  
+  <main>
 
-            <h1>
-                <a href="#" class="logo">Dashboard</a>
-            </h1>
+  <div class="container">
+    <form 
+			id="task-form"
+			action="#" 
+			name="taskForm" 
+			onsubmit="exports.addTask(event)"
+			autocomplete="off"
+			>
+			
+      <label for="title">title</label>
+      <input type="text" name="title" maxlength="40" required>
 
-            <button class="menu-toggle-btn icon-box" data-menu-toggle-btn aria-label="Toggle Menu">
-                <span class="material-symbols-rounded  icon">menu</span>
-            </button>
+      <label for="content">content</label>
+      <textarea 
+      	name="content" 
+      	id="content"
+      	maxlength="200"
+      	wrap="hard" 
+      	ro ws="4"></textarea>
 
-            <nav class="navbar">
-                <div class="container">
+      <input 
+				type="submit" 
+				name="addTaskBtn" 
+				value="add task"
+			 	class="btn"
+			 >
+    </form>
 
-                    <ul class="navbar-list">
+  </div>
 
-                        <li>
-                            <a href="/visualization" class="navbar-link active icon-box">
-                                <span class="material-symbols-rounded  icon">grid_view</span>
+  <hr>
+ 
+  <div class="container">
+	<nav>
+		<button onclick="exports.clearCompleted()" class="btn disabled" >
+			clear completed
+		</button>
+	</nav>
+    <ul></ul>
+  </div>
 
-                                <span>Home</span>
-                            </a>
-                        </li>
+</main>
 
-                        <li>
-                            <a href="#" class="navbar-link icon-box">
-                                <span class="material-symbols-rounded  icon">folder</span>
-
-                                <span>Projects</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="navbar-link icon-box">
-                                <span class="material-symbols-rounded  icon">list</span>
-
-                                <span>Tasks</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="navbar-link icon-box">
-                                <span class="material-symbols-rounded  icon">bar_chart</span>
-
-                                <span>Reports</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="navbar-link icon-box">
-                                <span class="material-symbols-rounded  icon">settings</span>
-
-                                <span>Settings</span>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                    <ul class="user-action-list">
-
-                        <li>
-                            <a href="#" class="notification icon-box">
-                                <span class="material-symbols-rounded  icon">notifications</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="header-profile">
-
-                                <figure class="profile-avatar">
-                                    <img src="{% static "images/admin.png" %}" alt="Alisha" width="40" height="45">
-                                </figure>
-
-                                <div>
-                                    <p class="profile-title">{{ request.user }} </p>
-
-                                    <p class="profile-subtitle">Admin</p>
-                                </div>
-
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </div>
-            </nav>
-
-        </div>
-    </header>
-    {% block body %}
+  
+  <script>
     
-    {% endblock body %}
-
-    <script src="{% static "js/script.js" %}"></script>
+  </script>
 </body>
 </html>
