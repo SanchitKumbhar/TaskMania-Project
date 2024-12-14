@@ -23,5 +23,6 @@ urlpatterns = [
     path('manager-login', views.managerlogin, name='credentials-login'),
     path("profile",views.profilepage,name="profile"),
     path("login-page",views.loginpage,name="login-page"),
-    path("signup-page",views.signuppage,name="signup-page")
+    path("signup-page",views.signuppage,name="signup-page"),
+    path("show-tasks-info",views.showTasksinfo,name="show-tasks-info"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

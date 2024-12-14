@@ -4,11 +4,13 @@ from django.contrib.auth import get_user_model
 from datetime import date
 from django.utils import timezone
 from django.shortcuts import render, redirect, HttpResponse
+from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 from app.models import *
+
 # from .forms import DateTimeForm
 
 
@@ -298,3 +300,7 @@ def manager(request):
             return HttpResponse("You are a Employee")
 
     return render(request, 'managerpanel.html', {'emp': Profile.objects.all()})
+
+def showTasksinfo(request):
+    allTasks=Todo.objects.all()
+    return JsonResponse({'data':allTasks})
