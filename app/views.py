@@ -17,13 +17,14 @@ from app.models import *
 # Create your views here.
 
 def position(request):
-        user = Profile.objects.get(user=request.user)
-        position = user.position
-        print(request.user)
-        if position == "Employee":
-            return 0
-        else:
-            return 1
+    user = Profile.objects.get(user=request.user)
+    position = user.position
+    print(request.user)
+    if position == "Employee":
+        return 0
+    else:
+        return 1
+
 
 def index(request):
     # if request.user.is_anonymous:
@@ -85,7 +86,10 @@ def loginpage(request):
             # A backend authenticated the credentials
             login(request, user)
             position(request)
-            return redirect("/manager-panel")
+            if position(request):
+                return redirect("/manager-panel")
+            else:
+                return redirect("/employee-panel")
     return render(request, "login-page.html")
 
 
@@ -189,7 +193,6 @@ def get_user_instance(username_or_email):
     return user_instance
 
 
-
 def taskdone(request, id):
     my_instance = Todo.objects.get(pk=id)
     my_instance.status = True
@@ -203,13 +206,27 @@ def taskdone(request, id):
 
 def employee_panel(request):
     if request.user.is_anonymous:
-        return redirect('/employee')
+        return redirect('/login-page')
     else:
-        if not request.user.is_staff:
-            user_data = Todo.objects.filter(user=request.user)
-
-            # print(user_data)
-            return render(request, "employee_panel.html", {'data': user_data})
+        if position(request) == 0:
+            profinstance=Profile.objects.get(user=request.user)
+            user_data = Todo.objects.filter(user=profinstance)
+            
+            if request.method == "POST":
+                task=request.POST.get("task")
+                deadline=request.POST.get("date")
+                status=request.POST.get("status")
+                file=request.FILES.get("file")
+                taskinstance=Todo.objects.get(id=task)
+                # empuser = Profile.objects.get(user=request.user)
+                # Todo.objects.get(user=empuser)
+                print(file)
+                
+                taskinstance.emp_date=deadline
+                taskinstance.status=status
+                taskinstance.file=file
+                taskinstance.save()
+            return render(request, "employeepanel.html", {'data': user_data})
         else:
             return HttpResponse("Not account found!")
 
@@ -263,21 +280,20 @@ def employee(request):
     return render(request, 'employee.html')
 
 
-
 def manager(request):
     if request.user.is_anonymous:
         return redirect('/login-page')
     else:
         if position(request) == 1:
             if request.method == 'POST':
-                    taskname = request.POST.get("taskname")
-                    taskDesc = request.POST.get("taskDesc")
-                    employeename = request.POST.get("employee")
-                    date = request.POST.get("date")
-                    user = User.objects.get(username="test")
-                    empuser = Profile.objects.get(user=user)
-                    Todo.objects.create(
-                        task=taskname, taskDesc=taskDesc, user=empuser, date=date)
+                taskname = request.POST.get("taskname")
+                taskDesc = request.POST.get("taskDesc")
+                employeename = request.POST.get("employee")
+                date = request.POST.get("date")
+                user = User.objects.get(username=employeename)
+                empuser = Profile.objects.get(user=user)
+                Todo.objects.create(
+                    task=taskname, taskDesc=taskDesc, user=empuser, date=date)
         else:
             return HttpResponse("You are a Employee")
 

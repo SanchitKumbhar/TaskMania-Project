@@ -38,7 +38,9 @@ class Todo(models.Model):
     date=models.DateField(default=get_default_start_date)
     status = models.BooleanField(default=False)  # Default value set to True
     emp_date=models.DateField(default=get_default_start_date)
-    compare_date=models.DateField(default=get_default_start_date)
+    file = models.FileField(upload_to='documents/')
+
+    # compare_date=models.DateField(default=get_default_start_date)
 
     def __str__(self):
         return self.task
