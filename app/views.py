@@ -10,7 +10,10 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 from app.models import *
-
+import pandas as pd
+import numpy as np
+from datetime import datetime
+import joblib
 # from .forms import DateTimeForm
 
 
@@ -205,28 +208,45 @@ def taskdone(request, id):
     my_instance.save()
     return redirect('/employee_panel')
 
+def organizeSort(df):
+   date_object = datetime.strptime(df["dataframe"][0], "%Y-%m-%d").date()
+   dates=[]
+   dates.append(date_object-date.today())
+   print(dates)
 
 def employee_panel(request):
     if request.user.is_anonymous:
         return redirect('/login-page')
     else:
         if position(request) == 0:
-            profinstance=Profile.objects.get(user=request.user)
+            profinstance = Profile.objects.get(user=request.user)
             user_data = Todo.objects.filter(user=profinstance)
+            tasknames = []
+            deadlines = []
+            data = user_data.values()
+            for i in range(len(user_data)):
+                tasknames.append(data[i].get("task"))
+                deadlines.append(str(data[i].get("date")))
+            dataframe = pd.DataFrame({
+                "TaskName": tasknames,
+                "Deadline": deadlines
+            })
             
+            organizeSort(dataframe)
+
             if request.method == "POST":
-                task=request.POST.get("task")
-                deadline=request.POST.get("date")
-                status=request.POST.get("status")
-                file=request.FILES.get("file")
-                taskinstance=Todo.objects.get(id=task)
+                task = request.POST.get("task")
+                deadline = request.POST.get("date")
+                status = request.POST.get("status")
+                file = request.FILES.get("file")
+                taskinstance = Todo.objects.get(id=task)
                 # empuser = Profile.objects.get(user=request.user)
                 # Todo.objects.get(user=empuser)
                 print(file)
-                
-                taskinstance.emp_date=deadline
-                taskinstance.status=status
-                taskinstance.file=file
+
+                taskinstance.emp_date = deadline
+                taskinstance.status = status
+                taskinstance.file = file
                 taskinstance.save()
             return render(request, "employeepanel.html", {'data': user_data})
         else:
@@ -301,6 +321,8 @@ def manager(request):
 
     return render(request, 'managerpanel.html', {'emp': Profile.objects.all()})
 
+
 def showTasksinfo(request):
-    allTasks=Todo.objects.all()
-    return JsonResponse({'data':allTasks})
+    pass
+    # allTasks=Todo.objects.all()
+    # return JsonResponse({'data':allTasks})
