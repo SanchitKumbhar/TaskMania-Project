@@ -35,6 +35,7 @@ class Todo(models.Model):
     task = models.CharField(max_length=100)
     taskDesc=models.TextField(null=True,default="none")
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    admin = models.ForeignKey(User, on_delete=models.CASCADE)
     date=models.DateField(default=get_default_start_date)
     status = models.BooleanField(default=False)  # Default value set to True
     emp_date=models.DateField(default=get_default_start_date)

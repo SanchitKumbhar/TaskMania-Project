@@ -25,4 +25,6 @@ urlpatterns = [
     path("login-page",views.loginpage,name="login-page"),
     path("signup-page",views.signuppage,name="signup-page"),
     path("show-tasks-info",views.showTasksinfo,name="show-tasks-info"),
+    path("Task-Forward",views.TaskForward,name="Task-Forward"),
+    path("allocate-task/api",views.forwardTaskapi,name="allocate-task/api"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

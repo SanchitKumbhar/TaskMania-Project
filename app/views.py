@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import get_object_or_404
 from datetime import datetime
 from django.contrib.auth import get_user_model
@@ -208,11 +209,18 @@ def taskdone(request, id):
     my_instance.save()
     return redirect('/employee_panel')
 
-def organizeSort(df):
-   date_object = datetime.strptime(df["dataframe"][0], "%Y-%m-%d").date()
-   dates=[]
-   dates.append(date_object-date.today())
-   print(dates)
+
+def organizeSort(tasknames, deadlines):
+    date_object = datetime.strptime(deadlines[0], "%Y-%m-%d").date()
+    dates = []
+    dates.append(date.today())
+    arrangement = []
+    for i in range():
+        arrangement.append(dates[0]-date_object)
+    new_arrangement=sorted(arrangement)
+
+
+
 
 def employee_panel(request):
     if request.user.is_anonymous:
@@ -227,13 +235,10 @@ def employee_panel(request):
             for i in range(len(user_data)):
                 tasknames.append(data[i].get("task"))
                 deadlines.append(str(data[i].get("date")))
-            dataframe = pd.DataFrame({
-                "TaskName": tasknames,
-                "Deadline": deadlines
-            })
-            
-            organizeSort(dataframe)
 
+            # organizeSort(tasknames, deadlines)
+            print(user_data)
+            
             if request.method == "POST":
                 task = request.POST.get("task")
                 deadline = request.POST.get("date")
@@ -266,6 +271,7 @@ def visualization(request):
             # filepathname = fileobj.url(filepathname)
             # data = Todo.objects.filter()
             non_staff_users = User.objects.filter(is_staff=False)
+
 
     return render(request, 'Emptable.html', {'data': non_staff_users})
 
@@ -315,12 +321,26 @@ def manager(request):
                 user = User.objects.get(username=employeename)
                 empuser = Profile.objects.get(user=user)
                 Todo.objects.create(
-                    task=taskname, taskDesc=taskDesc, user=empuser, date=date)
+                    task=taskname, taskDesc=taskDesc, user=empuser, date=date,admin=request.user)
         else:
             return HttpResponse("You are a Employee")
 
     return render(request, 'managerpanel.html', {'emp': Profile.objects.all()})
 
+def TaskForward(request):
+    data=Todo.objects.filter(admin=request.user)
+    return render(request,"task-forward.html",{'data' : data})
+
+def forwardTaskapi(request):
+    if request.method=="POST":
+        id=json.loads(request.body)
+        data=id.get("id")
+
+        
+
+    return JsonResponse({
+        'success' : "ok"
+    })
 
 def showTasksinfo(request):
     pass

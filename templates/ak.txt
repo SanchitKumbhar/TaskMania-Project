@@ -1,0 +1,16 @@
+manager panel
+Notify admin about not task incomplitions with deadlines.
+material attachement while providing task
+task forwarding
+badges based in progress and completion statistics
+workload page i.e admin can see the workload provided to a particular employee and his progress at the same time
+
+
+employee panel:
+task visvualize
+submition
+sorting--->completed tasks,incompleted tasks,deadlines....
+task acceptence, this will notify admin that the user has started to work
+
+
+
