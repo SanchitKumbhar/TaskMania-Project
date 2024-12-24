@@ -329,14 +329,20 @@ def manager(request):
 
 def TaskForward(request):
     data=Todo.objects.filter(admin=request.user)
-    return render(request,"task-forward.html",{'data' : data})
+    emp=Profile.objects.filter(position="Employee")
+    return render(request,"task-forward.html",{'data' : data,'emp':emp})
 
 def forwardTaskapi(request):
     if request.method=="POST":
         id=json.loads(request.body)
         data=id.get("id")
+        emp=id.get("emp")
 
-        
+    instance=Todo.objects.get(id=data)
+    emp=User.objects.get(username=emp)
+    profinsatnce=Profile.objects.get(user=emp)
+    instance.user=profinsatnce        
+    instance.save()
 
     return JsonResponse({
         'success' : "ok"
