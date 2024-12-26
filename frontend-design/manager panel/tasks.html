@@ -15,7 +15,7 @@
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     />
-   
+
     <title>Tasks</title>
 
     <style>
@@ -63,7 +63,6 @@
         </div>
       </div>
 
-     
       <!-- Button trigger modal -->
       <button
         type="button"
@@ -101,49 +100,81 @@
 
             <div class="modal-body">
               <form>
-                
+                <!-- task asssignment form -->
+                <form method="post">
+                  <!-- Task Name -->
+                  <div class="mb-3">
+                    <label for="taskName" class="form-label">Task Name :</label>
+                    <input
+                      name="taskname"
+                      type="text"
+                      class="form-control"
+                      id="taskName"
+                      placeholder="Enter task name"
+                      required=""
+                      fdprocessedid="ul7kr"
+                    />
+                  </div>
+                  <!-- Task Description -->
+                  <div class="mb-3">
+                    <label for="taskDescription" class="form-label"
+                      >Task Description :</label
+                    >
+                    <textarea
+                      name="taskDesc"
+                      class="form-control"
+                      id="taskDescription"
+                      rows="4"
+                      placeholder="Describe the task"
+                      required=""
+                    ></textarea>
+                  </div>
+                  <!-- Select Employee -->
+                  <div class="mb-3">
+                    <label for="employeeSelect" class="form-label"
+                      >Assign to Employee :</label
+                    >
+                    <select
+                      name="employee"
+                      class="form-select select-employee"
+                      id="employeeSelect"
+                      required=""
+                      fdprocessedid="ah5fqk"
+                    >
+                      <option selected="" disabled="">Select Employee</option>
+                      <option value="emp1">Employee 1</option>
+                      <option value="emp2">Employee 2</option>
+                      <option value="emp3">Employee 3</option>
+                      <option value="emp4">Employee 4</option>
+                      <option value="emp5">Employee 5</option>
 
-               <!-- task asssignment form -->
-                  <form method="post">
-                    <!-- Task Name -->
-                    <div class="mb-3">
-                      <label for="taskName" class="form-label">Task Name :</label>
-                      <input name="taskname" type="text" class="form-control" id="taskName" placeholder="Enter task name" required="" fdprocessedid="ul7kr">
-                    </div>
-                    <!-- Task Description -->
-                    <div class="mb-3">
-                      <label for="taskDescription" class="form-label">Task Description :</label>
-                      <textarea name="taskDesc" class="form-control" id="taskDescription" rows="4" placeholder="Describe the task" required=""></textarea>
-                    </div>
-                    <!-- Select Employee -->
-                    <div class="mb-3">
-                      <label for="employeeSelect" class="form-label">Assign to Employee :</label>
-                      <select name="employee" class="form-select select-employee" id="employeeSelect" required="" fdprocessedid="ah5fqk">
-                        <option selected="" disabled="">Select Employee</option>
-                        <option value="emp1">Employee 1</option>
-                        <option value="emp2">Employee 2</option>
-                        <option value="emp3">Employee 3</option>
-                        <option value="emp4">Employee 4</option>
-                        <option value="emp5">Employee 5</option>
-
-                        <option value="{{index.user}}">{{index.user}}</option>
-                        
-                      </select>
-                    </div>
-                    <!-- Deadline -->
-                    <div class="mb-3">
-                      <label for="deadline" class="form-label">Deadline :</label>
-                      <input name="date" type="date" class="form-control" id="deadline" required="">
-                    </div>
-                    <!-- Submit Button -->
-                    <button type="submit" class="btn btn-primary w-100" fdprocessedid="4pm46m">Assign Task</button>
-                  </form>
-                  <footer>
-                    <p>© 2024 Task Manager. All rights reserved.</p>
-                  </footer>
+                      <option value="{{index.user}}">{{index.user}}</option>
+                    </select>
+                  </div>
+                  <!-- Deadline -->
+                  <div class="mb-3">
+                    <label for="deadline" class="form-label">Deadline :</label>
+                    <input
+                      name="date"
+                      type="date"
+                      class="form-control"
+                      id="deadline"
+                      required=""
+                    />
+                  </div>
+                  <!-- Submit Button -->
+                  <button
+                    type="submit"
+                    class="btn btn-primary w-100"
+                    fdprocessedid="4pm46m"
+                  >
+                    Assign Task
+                  </button>
+                </form>
+                <footer>
+                  <p>© 2024 Task Manager. All rights reserved.</p>
+                </footer>
                 <!-- </div> -->
-
-
               </form>
             </div>
             <div class="modal-footer">
@@ -163,7 +194,7 @@
       </div>
     </nav>
 
-   <!-- table -->
+    <!-- table -->
     <table class="table table-striped table-light">
       <thead class="bg-primary" style="color: white">
         <tr>
