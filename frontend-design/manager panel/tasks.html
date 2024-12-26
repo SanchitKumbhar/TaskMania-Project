@@ -15,101 +15,354 @@
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     />
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet"> -->
+    <!-- <link rel="stylesheet" href="https://www.flaticon.com/free-icons/search" /> -->
+    <title>Tasks</title>
 
-    <title>manager panel</title>
+    <style>
+      th,
+      td {
+        text-align: center;
+        /* Center align text */
+        vertical-align: middle;
+        /* Vertically align text in the middle */
+        justify-items: center;
+      }
+
+      th {
+        width: 20%;
+        /* Set consistent widths for each column */
+      }
+    </style>
   </head>
+
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <a class="navbar-brand mr-5" href="#" style="font-size: 1.4rem;">
-        <img
-          src="logo.png"
-          width="30"
-          height="30"
-          class="d-inline-block align-center"
-          alt=""
-        />
-        TaskMania
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary my-2">
+      <a
+        class="navbar-brand text-light vertical-align-middle mr-auto"
+        style="font-size: 1.5rem"
+        href="#"
+      >
+        <img src="angle-double-small-right.png" alt="" />
+        Tasks
       </a>
 
-      <!-- <form class="form-inline my-2 my-lg-0">
-        <input
-          class="form-control mr-sm-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">
-          Search
-        </button>
-      </form> -->
+      <!-- <button class="btn btn-outline-light mr-auto" type="submit">
+          Assign Tasks
+        </button> -->
 
+      <div class="btn-group">
+        <button
+          type="button"
+          class="btn btn-outline-light bg-primary dropdown-toggle mr-3"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Sort
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Accepted</a>
+          <a class="dropdown-item" href="#">Pending</a>
+          <a class="dropdown-item" href="#">Completed</a>
+          <a class="dropdown-item" href="#">Submitted</a>
+        </div>
+      </div>
+
+      <!-- <button type="button" class="btn btn-outline-primary">
+        Assign Tasks
+      </button> -->
+
+      <!-- Button trigger modal -->
       <button
-        class="navbar-toggler"
         type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
+        class="btn btn-outline-light bg-primary"
+        data-toggle="modal"
+        data-target="#exampleModalScrollable"
       >
-        <span class="navbar-toggler-icon"></span>
+        Assign Tasks
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="../manager panel/dashboard.html" style="font-size: 1.1rem"
-              >Dashboard <span class="sr-only">(current)</span></a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../manager panel/projects.html" style="font-size: 1.1rem"
-              >Projects</a
-            >
-          </li>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="exampleModalScrollable"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalScrollableTitle"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalScrollableTitle">
+                Task Assignment Form
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
 
-          <li class="nav-item active">
-            <a class="nav-link" href="tasks.html" style="font-size: 1.1rem">Tasks</a>
-          </li>
+            <div class="modal-body">
+              <form>
+                
 
-          <li class="nav-item">
-            <a class="nav-link" href="../manager panel/notifications.html" style="font-size: 1.1rem"
-              >Notifications
-              <span class="badge badge-pill badge-light">1</span></a
-            >
-          </li>
+                <!-- <div class="container"> -->
+                  <!-- <h2 class="header">Task Assignment</h2> -->
+                  <form method="post">
+                    <!-- {% csrf_token %} -->
+                    <!-- Task Name -->
+                    <div class="mb-3">
+                      <label for="taskName" class="form-label">Task Name :</label>
+                      <input name="taskname" type="text" class="form-control" id="taskName" placeholder="Enter task name" required="" fdprocessedid="ul7kr">
+                    </div>
+                    <!-- Task Description -->
+                    <div class="mb-3">
+                      <label for="taskDescription" class="form-label">Task Description :</label>
+                      <textarea name="taskDesc" class="form-control" id="taskDescription" rows="4" placeholder="Describe the task" required=""></textarea>
+                    </div>
+                    <!-- Select Employee -->
+                    <div class="mb-3">
+                      <label for="employeeSelect" class="form-label">Assign to Employee :</label>
+                      <select name="employee" class="form-select select-employee" id="employeeSelect" required="" fdprocessedid="ah5fqk">
+                        <option selected="" disabled="">Select Employee</option>
+                        <option value="emp1">Employee 1</option>
+                        <option value="emp2">Employee 2</option>
+                        <option value="emp3">Employee 3</option>
+                        <option value="emp4">Employee 4</option>
+                        <option value="emp5">Employee 5</option>
 
-          <li class="nav-item">
-            <a class="nav-link" href="../manager panel/myTeam.html" style="font-size: 1.1rem">My Team</a>
-          </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0 mr-auto">
-          <input
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-            style="width: 300px"
-          />
-          <button class="btn btn-outline-light my-2 my-sm-0" type="submit">
-            Search
-          </button>
-        </form>
+                        <!-- {% for index in emp %} -->
+                        <option value="{{index.user}}">{{index.user}}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <!-- Deadline -->
+                    <div class="mb-3">
+                      <label for="deadline" class="form-label">Deadline :</label>
+                      <input name="date" type="date" class="form-control" id="deadline" required="">
+                    </div>
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary w-100" fdprocessedid="4pm46m">Assign Task</button>
+                  </form>
+                  <footer>
+                    <p>© 2024 Task Manager. All rights reserved.</p>
+                  </footer>
+                <!-- </div> -->
 
-        <a class="navbar-brand" href="#">
-          <img
-            src="profile.png"
-            width="40"
-            height="40"
-            alt="Profile Logo"
-            class="rounded-circle"
-            style="width: 40px; height: 40px; object-fit: cover"
-          />
-        </a>
+
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-primary">
+                Save changes
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </nav>
 
-    
+    <!-- <i class="bi bi-arrow-right"></i> -->
+    <!-- <i class="fi fi-rr-angle-double-small-right"></i> -->
+
+    <table class="table table-striped table-light">
+      <thead class="bg-primary" style="color: white">
+        <tr>
+          <th scope="col">Sr. No.</th>
+          <th scope="col">Tasks</th>
+          <th scope="col">Assigned To</th>
+          <th scope="col">Progress</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>event M</td>
+          <td>ippo</td>
+          <td>
+            <div
+              class="progress"
+              style="width: 7rem; border: 2px solid rgb(103, 202, 209)"
+            >
+              <div
+                class="progress-bar bg-primary"
+                role="progressbar"
+                style="width: 90%"
+                aria-valuenow="80"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </td>
+          <td>completed</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>DeathNote</td>
+          <td>Light</td>
+          <td>
+            <div
+              class="progress"
+              style="width: 7rem; border: 2px solid rgb(103, 202, 209)"
+            >
+              <div
+                class="progress-bar bg-primary"
+                role="progressbar"
+                style="width: 50%"
+                aria-valuenow="80"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </td>
+          <td>accepted</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>Kira</td>
+          <td>L Lawliet</td>
+          <td>
+            <div
+              class="progress"
+              style="width: 7rem; border: 2px solid rgb(103, 202, 209)"
+            >
+              <div
+                class="progress-bar bg-primary"
+                role="progressbar"
+                style="width: 90%"
+                aria-valuenow="80"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </td>
+          <td>submitted</td>
+        </tr>
+        <tr>
+          <th scope="row">4</th>
+          <td>frontend</td>
+          <td>akanksha</td>
+          <td>
+            <div
+              class="progress"
+              style="width: 7rem; border: 2px solid rgb(103, 202, 209)"
+            >
+              <div
+                class="progress-bar bg-primary"
+                role="progressbar"
+                style="width: 90%"
+                aria-valuenow="80"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </td>
+          <td>pending</td>
+        </tr>
+
+        <tr>
+          <th scope="row">1</th>
+          <td>event M</td>
+          <td>ippo</td>
+          <td>
+            <div
+              class="progress"
+              style="width: 7rem; border: 2px solid rgb(103, 202, 209)"
+            >
+              <div
+                class="progress-bar bg-primary"
+                role="progressbar"
+                style="width: 90%"
+                aria-valuenow="80"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </td>
+          <td>completed</td>
+        </tr>
+
+        <tr>
+          <th scope="row">1</th>
+          <td>event M</td>
+          <td>ippo</td>
+          <td>
+            <div
+              class="progress"
+              style="width: 7rem; border: 2px solid rgb(103, 202, 209)"
+            >
+              <div
+                class="progress-bar bg-primary"
+                role="progressbar"
+                style="width: 90%"
+                aria-valuenow="80"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </td>
+          <td>completed</td>
+        </tr>
+
+        <tr>
+          <th scope="row">1</th>
+          <td>event M</td>
+          <td>ippo</td>
+          <td>
+            <div
+              class="progress"
+              style="width: 7rem; border: 2px solid rgb(103, 202, 209)"
+            >
+              <div
+                class="progress-bar bg-primary"
+                role="progressbar"
+                style="width: 90%"
+                aria-valuenow="80"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </td>
+          <td>completed</td>
+        </tr>
+
+        <tr>
+          <th scope="row">1</th>
+          <td>event M</td>
+          <td>ippo</td>
+          <td>
+            <div
+              class="progress"
+              style="width: 7rem; border: 2px solid rgb(103, 202, 209)"
+            >
+              <div
+                class="progress-bar bg-primary"
+                role="progressbar"
+                style="width: 90%"
+                aria-valuenow="80"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </td>
+          <td>completed</td>
+        </tr>
+      </tbody>
+    </table>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
