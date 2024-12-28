@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>demo.html</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome for Icons -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* Upper navbar with primary background */
+      .navbar {
+        background-color: var(--bs-primary) !important;
+        height: 4.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 0;
+        padding-bottom: 0;
+        position: relative;
+        z-index: 5;
+        transition: all 0.3s ease;
+      }
+
+      /* Sidebar (collapse-left) with card-like structure and curvy right borders */
+      .collapse-left {
+        position: fixed;
+        top: 0;
+        left: -270px;
+        width: 270px;
+        height: 100%;
+        background-color: #0d6efd; /* Primary color */
+        border-top-right-radius: 20px; /* Curvy top-right corner */
+        border-bottom-right-radius: 20px; /* Curvy bottom-right corner */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Card-like shadow effect */
+        transition: all 0.3s ease;
+        z-index: 10;
+        padding-top: 1rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      .collapse-left.show {
+        left: 0;
+      }
+
+      /* Sidebar sections with white border */
+      .collapse-left .section {
+        width: 100%;
+        height: 70px;
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        color: white;
+        border-bottom: 2px solid white; /* White border between sections */
+      }
+
+      .collapse-left .section:last-child {
+        border-bottom: none; /* No border on the last section */
+      }
+
+      /* Sidebar profile logo and close button */
+      .sidebar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        color: white;
+      }
+
+      .sidebar-header .profile-logo img {
+        width: 100px; /* Increased size */
+        height: 100px; /* Increased size */
+        border-radius: 50%;
+      }
+
+      .sidebar-header .close-btn {
+        font-size: 24px;
+        color: white;
+        cursor: pointer;
+      }
+
+      /* Navbar toggler button */
+      .navbar-toggler {
+        border: none;
+        background-color: var(--bs-primary);
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 20;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+
+      /* Navbar toggler icon */
+      .navbar-toggler-icon {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 25px;
+        height: 18px;
+        position: relative;
+      }
+
+      .navbar-toggler-icon div {
+        width: 100%;
+        height: 3px;
+        background-color: white;
+        transition: all 0.3s ease;
+      }
+
+      /* Navbar form and buttons */
+      .navbar .form-inline {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-grow: 1;
+        transition: all 0.3s ease;
+        position: absolute;
+        left: 80px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 15;
+      }
+
+      .navbar .form-inline input {
+        width: 300px;
+      }
+
+      /* Right-side icons (Settings & Notification) */
+      .navbar .icons {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+      }
+
+      .navbar .icons .icon {
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        margin-left: 15px;
+        transition: color 0.3s ease;
+      }
+
+      .navbar .icons .icon:hover {
+        text-shadow: 0 0 15px rgba(66, 65, 65, 0.6),
+          0 0 20px rgba(83, 82, 82, 0.5), 0 0 30px rgba(71, 70, 70, 0.4);
+        color: #021e48;
+      }
+
+      /* Right-side navbar links positioned right before the icons */
+      .navbar .links {
+        display: flex;
+        margin-left: 70rem;
+      }
+
+      .navbar .links .link {
+        color: white;
+        font-size: 17px;
+        margin-right: 15px;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+
+      .navbar .links .link:hover {
+        text-shadow: 0 0 15px rgba(66, 65, 65, 0.6),
+          0 0 20px rgba(83, 82, 82, 0.5), 0 0 30px rgba(71, 70, 70, 0.4);
+        color: #021e48;
+      }
+
+      /* sanchit css */
+
+      body {
+        font-family: "Poppins", sans-serif;
+      }
+      /* Navbar Styling */
+      .navbar {
+        background-color: #0056b3;
+      }
+      .navbar-brand {
+        font-weight: bold;
+        color: white;
+      }
+      .navbar-brand:hover {
+        color: #d1ecf1;
+      }
+      .nav-link {
+        color: white;
+      }
+      .nav-link:hover {
+        color: #cce7ff;
+      }
+
+      /* Hero Section */
+      .hero {
+        background: linear-gradient(90deg, #0056b3, #007bff);
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+      }
+      .hero h1 {
+        font-size: 3.5rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+      .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+      }
+      .btn-hero {
+        background-color: #ff7f50;
+        color: white;
+        border-radius: 30px;
+        padding: 12px 30px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+      }
+      .btn-hero:hover {
+        background-color: #ff6347;
+      }
+
+      /* Features Section */
+      .features {
+        padding: 60px 20px;
+        text-align: center;
+        background-color: #f8f9fa;
+      }
+      .features h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: #0056b3;
+      }
+      .feature-box {
+        margin-bottom: 30px;
+      }
+      .feature-box img {
+        max-width: 100px;
+        margin-bottom: 20px;
+      }
+
+      /* Pricing Section */
+      .pricing {
+        padding: 60px 20px;
+        background-color: #fff;
+        text-align: center;
+      }
+      .pricing h2 {
+        color: #0056b3;
+        margin-bottom: 20px;
+      }
+      .pricing .card {
+        border: none;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .pricing .card:hover {
+        transform: scale(1.05);
+        transition: all 0.3s ease;
+      }
+
+      /* Testimonials Section */
+      .testimonials {
+        padding: 60px 20px;
+        background-color: #f8f9fa;
+      }
+      .testimonials h2 {
+        color: #0056b3;
+        margin-bottom: 20px;
+      }
+      .testimonial-card {
+        border: none;
+        background-color: white;
+        padding: 20px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+
+      /* FAQ Section */
+      .faq {
+        padding: 60px 20px;
+      }
+      .faq h2 {
+        color: #0056b3;
+        margin-bottom: 20px;
+      }
+      .accordion-button {
+        background-color: #0056b3;
+        color: white;
+      }
+      .accordion-button:not(.collapsed) {
+        color: white;
+        background-color: #007bff;
+      }
+
+      /* Footer Section */
+      .footer {
+        background-color: #343a40;
+        color: white;
+        padding: 20px 0;
+        text-align: center;
+      }
+      .footer a {
+        color: #ff7f50;
+        text-decoration: none;
+      }
+      .footer a:hover {
+        text-decoration: underline;
+      }
+
+      .bodyhtml{
+        /* display: block; */
+        /* align-items: center; */
+        /* justify-content: flex-start; */
+        /* flex-grow: 1; */
+        /* transition: all 0.3s ease; */
+        position: relative;
+        /* left: 80px; */
+        /* top: 50%; */
+        /* transform: translateY(-50%); */
+        /* z-index: 15; */
+      }
+      /* end sanchit css */
+    </style>
+  </head>
+  <body>
+    <div class="pos-f-t">
+      <!-- Sidebar (collapse-left) -->
+      <div class="collapse-left" id="navbarToggleExternalContent">
+        <div class="sidebar-header">
+          <div class="profile-logo">
+            <img src="profile.png" alt="Profile Logo" />
+          </div>
+          <span class="close-btn" id="closeSidebar">&times;</span>
+        </div>
+        <div class="section">Home</div>
+        <div class="section">Dashboard</div>
+        <div class="section">Projects</div>
+        <div class="section">Tasks</div>
+        <div class="section">Notifications</div>
+        <div class="section">My Team</div>
+        <div class="section">Logout</div>
+      </div>
+
+      <!-- Top navbar -->
+      <nav class="navbar navbar-dark">
+        <button class="navbar-toggler" type="button" id="toggleNavbar">
+          <span class="navbar-toggler-icon">
+            <div></div>
+            <div></div>
+            <div></div>
+          </span>
+        </button>
+
+        <!-- Left-side links (such as Search) -->
+        <form class="form-inline">
+          <input
+            class="form-control mr-sm-2 mx-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <button class="btn btn-outline-light my-2 my-sm-0" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+
+        <!-- Right-side links (Features, Pricing, Testimonials) -->
+        <div class="links">
+          <div class="link">Features</div>
+          <div class="link">Pricing</div>
+          <div class="link">Testimonials</div>
+        </div>
+
+        <!-- Right-side Icons: Settings and Notifications -->
+        <div class="icons">
+          <div class="icon" id="settingsIcon">
+            <i class="fas fa-cogs"></i>
+            <!-- Settings Icon -->
+          </div>
+          <div class="icon" id="notificationIcon">
+            <i class="fas fa-bell"></i>
+            <!-- Notification Icon -->
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <!-- sanchit html -->
+
+    <!-- <div class="bodyhtml"> -->
+    <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="#">Task Manager</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                  <a class="nav-link" href="#features">Features</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#pricing">Pricing</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#testimonials">Testimonials</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link btn btn-light text-primary ms-3" href="#">Sign Up</a>
+              </li>
+          </ul>
+      </div> -->
+    </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <h1>Welcome to Task Manager</h1>
+        <p>
+          Your productivity partner. Stay on track, collaborate, and achieve
+          more.
+        </p>
+        <a href="/login-page" class="btn btn-hero">Get Started Today</a>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+      <div class="container">
+        <h2>Features</h2>
+        <div class="row">
+          <div class="col-md-4 feature-box">
+            <img src="https://via.placeholder.com/100" alt="Feature 1" />
+            <h5>Task Organization</h5>
+            <p>Keep your tasks sorted and prioritized effortlessly.</p>
+          </div>
+          <div class="col-md-4 feature-box">
+            <img src="https://via.placeholder.com/100" alt="Feature 2" />
+            <h5>Team Collaboration</h5>
+            <p>Work seamlessly with your team members in real-time.</p>
+          </div>
+          <div class="col-md-4 feature-box">
+            <img src="https://via.placeholder.com/100" alt="Feature 3" />
+            <h5>Analytics</h5>
+            <p>Track your progress with detailed reports and insights.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+      <div class="container">
+        <h2>Pricing Plans</h2>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card p-4">
+              <h5>Basic</h5>
+              <p>$5/month</p>
+              <ul>
+                <li>Task Organization</li>
+                <li>Limited Collaboration</li>
+              </ul>
+              <a href="#" class="btn btn-primary">Choose Plan</a>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card p-4">
+              <h5>Pro</h5>
+              <p>$15/month</p>
+              <ul>
+                <li>All Basic Features</li>
+                <li>Unlimited Collaboration</li>
+                <li>Analytics</li>
+              </ul>
+              <a href="#" class="btn btn-primary">Choose Plan</a>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card p-4">
+              <h5>Enterprise</h5>
+              <p>$30/month</p>
+              <ul>
+                <li>All Pro Features</li>
+                <li>Custom Integrations</li>
+              </ul>
+              <a href="#" class="btn btn-primary">Choose Plan</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+      <div class="container">
+        <h2>What Our Users Say</h2>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="testimonial-card">
+              <p>
+                "Task Manager has transformed the way my team works. Highly
+                recommended!"
+              </p>
+              <p><strong>- Alex, Manager</strong></p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="testimonial-card">
+              <p>
+                "The best productivity tool I have ever used. Amazing features!"
+              </p>
+              <p><strong>- Sarah, Developer</strong></p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="testimonial-card">
+              <p>"Simple yet powerful. I love the analytics feature!"</p>
+              <p><strong>- John, Freelancer</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+      <div class="container">
+        <h2>FAQs</h2>
+        <div class="accordion" id="faqAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#faq1"
+              >
+                What is Task Manager?
+              </button>
+            </h2>
+            <div id="faq1" class="accordion-collapse collapse">
+              <div class="accordion-body">
+                Task Manager is a productivity tool designed to help you manage
+                tasks and collaborate with your team.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#faq2"
+              >
+                Is there a free trial?
+              </button>
+            </h2>
+            <div id="faq2" class="accordion-collapse collapse">
+              <div class="accordion-body">
+                Yes, we offer a 14-day free trial for all plans.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#faq3"
+              >
+                Can I cancel my subscription anytime?
+              </button>
+            </h2>
+            <div id="faq3" class="accordion-collapse collapse">
+              <div class="accordion-body">
+                Absolutely! You can cancel your subscription from your account
+                settings.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>
+        &copy; 2024 Task Manager. All rights reserved. |
+        <a href="#">Privacy Policy</a>
+      </p>
+    </footer>
+  <!-- </div> -->
+
+    <!-- end of sanchit html -->
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const toggleButton = document.getElementById("toggleNavbar");
+      const navbarContent = document.getElementById(
+        "navbarToggleExternalContent"
+      );
+      const closeButton = document.getElementById("closeSidebar");
+      const navbarForm = document.querySelector(".navbar .form-inline");
+      const navbarToggler = document.querySelector(".navbar-toggler");
+
+      toggleButton.addEventListener("click", () => {
+        navbarContent.classList.toggle("show");
+        navbarToggler.classList.toggle("active");
+        navbarForm.style.left = navbarContent.classList.contains("show")
+          ? "300px"
+          : "80px";
+      });
+
+      closeButton.addEventListener("click", () => {
+        navbarContent.classList.remove("show");
+        navbarToggler.classList.remove("active");
+        navbarForm.style.left = "80px";
+      });
+    </script>
+  </body>
+</html>

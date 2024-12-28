@@ -1,133 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Employee Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fc;
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
 
-    <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
-    />
+        /* Navbar */
+        .navbar {
+            background-color: #007bff;
+            color: white;
+        }
 
-    <title>manager panel</title>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <a class="navbar-brand mr-5" href="#" style="font-size: 1.4rem;">
-        <img
-        src="logo.png"
-        width="30"
-        height="30"
-        class="d-inline-block align-center"
-        alt=""
-        />
-        TaskMania
-      </a>
-      <!-- d-inline-block align-center -->
-      <!-- <form class="form-inline my-2 my-lg-0">
-        <input
-          class="form-control mr-sm-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">
-          Search
-        </button>
-      </form> -->
+        .navbar h1 {
+            font-size: 1.5rem;
+            margin: 0;
+            color: white;
+        }
 
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
+        .navbar .btn {
+            color: white;
+            border-color: white;
+        }
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="dashboard.html" style="font-size: 1.1rem"
-              >Dashboard <span class="sr-only">(current)</span></a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              href="../manager panel/projects.html"
-              style="font-size: 1.1rem"
-              >Projects</a
-            >
-          </li>
+        /* Summary cards */
+        .summary-card {
+            background: linear-gradient(135deg, #007bff, #17a2b8);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
 
-          <li class="nav-item">
-            <a class="nav-link" href="../manager panel/tasks.html" style="font-size: 1.1rem;">Tasks</a>
-          </li>
+        .summary-card h5 {
+            font-weight: bold;
+            font-size: 1rem;
+        }
 
-          <li class="nav-item">
-            <a class="nav-link" href="../manager panel/notifications.html" style="font-size: 1.1rem;"
-              >Notifications
-              <span class="badge badge-pill badge-light">1</span></a
-            >
-          </li>
+        .summary-card p {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
 
-          <li class="nav-item">
-            <a class="nav-link" href="../manager panel/myTeam.html" style="font-size: 1.1rem;">My Team</a>
-          </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0 mr-auto">
-          <input
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-            style="width: 300px"
-          />
-          <button class="btn btn-outline-light my-2 my-sm-0" type="submit">
-            Search
-          </button>
-        </form>
+        /* Chart container */
+        .chart-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
 
-        <a class="navbar-brand" href="#">
-          <img
-            src="profile.png"
-            width="40"
-            height="40"
-            alt="Profile Logo"
-            class="rounded-circle"
-            style="width: 40px; height: 40px; object-fit: cover"
-          />
-        </a>
-      </div>
+        /* Table */
+        table {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        table th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Scrollable table for smaller screens */
+        .table-responsive {
+            border-radius: 10px;
+            overflow-x: auto;
+        }
+
+        .stats-link {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .stats-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Small device adjustments */
+        @media (max-width: 576px) {
+            .summary-card p {
+                font-size: 1.2rem;
+            }
+
+            .chart-container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <h1 class="navbar-brand">Task Dashboard</h1>
+            <button class="btn btn-outline-light">Logout</button>
+        </div>
     </nav>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script
-      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
-      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <!-- Summary Cards -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-3 col-sm-6">
+                <div class="summary-card">
+                    <h5>Total Tasks</h5>
+                    <p id="total-tasks">150</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="summary-card">
+                    <h5>Completed Tasks</h5>
+                    <p id="tasks-completed">120</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="summary-card">
+                    <h5>Pending Tasks</h5>
+                    <p id="tasks-pending">30</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="summary-card">
+                    <h5>Average Performance</h5>
+                    <p id="avg-performance">85%</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts and Table -->
+        <div class="row g-3 mb-4">
+            <!-- Pie Chart -->
+            <div class="col-lg-6 col-md-12">
+                <div class="chart-container">
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Employee Task Table -->
+            <div class="col-lg-6 col-md-12">
+                <h5 class="mb-3">Employee Task Details</h5>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Employee Name</th>
+                                <th>Total Tasks</th>
+                                <th>Completed</th>
+                                <th>Pending</th>
+                                <th>Performance</th>
+                                <th>Performance Metrics</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>John Doe</td>
+                                <td>50</td>
+                                <td>45</td>
+                                <td>5</td>
+                                <td>90%</td>
+                                <td>
+                                    <a href="#" class="stats-link">
+                                        <span class="stats-icon">📊</span> View Stats
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>40</td>
+                                <td>30</td>
+                                <td>10</td>
+                                <td>75%</td>
+                                <td>
+                                    <a href="#" class="stats-link">
+                                        <span class="stats-icon">📊</span> View Stats
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Mike Johnson</td>
+                                <td>60</td>
+                                <td>55</td>
+                                <td>5</td>
+                                <td>92%</td>
+                                <td>
+                                    <a href="#" class="stats-link">
+                                        <span class="stats-icon">📊</span> View Stats
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                              <td>Mikeeeeeeeee Johnson</td>
+                              <td>60</td>
+                              <td>55</td>
+                              <td>5</td>
+                              <td>92%</td>
+                              <td>
+                                  <a href="#" class="stats-link">
+                                      <span class="stats-icon">📊</span> View Stats
+                                  </a>
+                              </td>
+                          </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart Scripts -->
+    <script>
+        // Pie Chart
+        const pieCtx = document.getElementById('pieChart').getContext('2d');
+        new Chart(pieCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Completed', 'Pending'],
+                datasets: [{
+                    data: [120, 30],
+                    backgroundColor: ['#007bff', '#6c757d']
+                }]
+            },
+            options: {
+                responsive: true,
+            }
+        });
+    </script>
+</body>
 </html>
