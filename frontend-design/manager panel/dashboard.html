@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Employee Dashboard</title>
+    <title>Task Dashboard</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <style>
         body {
             background-color: #f8f9fc;
@@ -56,6 +57,15 @@
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 20px;
+            width: 100%;
+        }
+
+        .pie-chart-container {
+            width: 50%; /* Minimize the width of the pie chart */
+        }
+
+        .graph-container {
+            width: 50%; /* Graph will take up the other 50% */
         }
 
         /* Table */
@@ -104,6 +114,39 @@
             .chart-container {
                 padding: 10px;
             }
+
+            .col-lg-6, .col-md-12 {
+                margin-bottom: 15px;
+            }
+
+            .pie-chart-container {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .graph-container {
+                width: 100%;
+            }
+        }
+
+        /* Modal Custom Styles */
+        .modal-dialog {
+            width: 430px; /* Width of the modal */
+            position: absolute;
+            top: 300px; /* Positioning the modal near the Performance column */
+            left: 65%; /* Offset modal to the right */
+            z-index: 1050; /* Ensure modal is above other content */
+        }
+
+        /* Ensure Modal Content fits */
+        .modal-content {
+            height: 300px; /* Adjust height for the histogram */
+        }
+
+        /* Canvas for the histogram */
+        .modal-body canvas {
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
@@ -146,17 +189,26 @@
             </div>
         </div>
 
-        <!-- Charts and Table -->
-        <div class="row g-3 mb-4">
+        <!-- Pie Chart Section -->
+        <div class="row g-3">
             <!-- Pie Chart -->
-            <div class="col-lg-6 col-md-12">
+            <div class="col-lg-6 col-md-12 pie-chart-container">
                 <div class="chart-container">
                     <canvas id="pieChart"></canvas>
                 </div>
             </div>
 
-            <!-- Employee Task Table -->
-            <div class="col-lg-6 col-md-12">
+            <!-- Graph Section -->
+            <div class="col-lg-6 col-md-12 graph-container">
+                <div class="chart-container">
+                    <canvas id="dailyTaskChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Employee Task Details -->
+        <div class="row g-3">
+            <div class="col-12">
                 <h5 class="mb-3">Employee Task Details</h5>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">
@@ -178,7 +230,127 @@
                                 <td>5</td>
                                 <td>90%</td>
                                 <td>
-                                    <a href="#" class="stats-link">
+                                    <a href="#" class="stats-link" data-bs-toggle="modal" data-bs-target="#statsModal">
+                                        <span class="stats-icon">📊</span> View Stats
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>John Doe</td>
+                                <td>50</td>
+                                <td>45</td>
+                                <td>5</td>
+                                <td>90%</td>
+                                <td>
+                                    <a href="#" class="stats-link" data-bs-toggle="modal" data-bs-target="#statsModal">
+                                        <span class="stats-icon">📊</span> View Stats
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>John Doe</td>
+                                <td>50</td>
+                                <td>45</td>
+                                <td>5</td>
+                                <td>90%</td>
+                                <td>
+                                    <a href="#" class="stats-link" data-bs-toggle="modal" data-bs-target="#statsModal">
+                                        <span class="stats-icon">📊</span> View Stats
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>John Doe</td>
+                                <td>50</td>
+                                <td>45</td>
+                                <td>5</td>
+                                <td>90%</td>
+                                <td>
+                                    <a href="#" class="stats-link" data-bs-toggle="modal" data-bs-target="#statsModal">
+                                        <span class="stats-icon">📊</span> View Stats
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>John Doe</td>
+                                <td>50</td>
+                                <td>45</td>
+                                <td>5</td>
+                                <td>90%</td>
+                                <td>
+                                    <a href="#" class="stats-link" data-bs-toggle="modal" data-bs-target="#statsModal">
+                                        <span class="stats-icon">📊</span> View Stats
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>John Doe</td>
+                                <td>50</td>
+                                <td>45</td>
+                                <td>5</td>
+                                <td>90%</td>
+                                <td>
+                                    <a href="#" class="stats-link" data-bs-toggle="modal" data-bs-target="#statsModal">
+                                        <span class="stats-icon">📊</span> View Stats
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>John Doe</td>
+                                <td>50</td>
+                                <td>45</td>
+                                <td>5</td>
+                                <td>90%</td>
+                                <td>
+                                    <a href="#" class="stats-link" data-bs-toggle="modal" data-bs-target="#statsModal">
+                                        <span class="stats-icon">📊</span> View Stats
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>John Doe</td>
+                                <td>50</td>
+                                <td>45</td>
+                                <td>5</td>
+                                <td>90%</td>
+                                <td>
+                                    <a href="#" class="stats-link" data-bs-toggle="modal" data-bs-target="#statsModal">
+                                        <span class="stats-icon">📊</span> View Stats
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>John Doe</td>
+                                <td>50</td>
+                                <td>45</td>
+                                <td>5</td>
+                                <td>90%</td>
+                                <td>
+                                    <a href="#" class="stats-link" data-bs-toggle="modal" data-bs-target="#statsModal">
+                                        <span class="stats-icon">📊</span> View Stats
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>John Doe</td>
+                                <td>50</td>
+                                <td>45</td>
+                                <td>5</td>
+                                <td>90%</td>
+                                <td>
+                                    <a href="#" class="stats-link" data-bs-toggle="modal" data-bs-target="#statsModal">
+                                        <span class="stats-icon">📊</span> View Stats
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>John Doe</td>
+                                <td>50</td>
+                                <td>45</td>
+                                <td>5</td>
+                                <td>90%</td>
+                                <td>
+                                    <a href="#" class="stats-link" data-bs-toggle="modal" data-bs-target="#statsModal">
                                         <span class="stats-icon">📊</span> View Stats
                                     </a>
                                 </td>
@@ -190,7 +362,7 @@
                                 <td>10</td>
                                 <td>75%</td>
                                 <td>
-                                    <a href="#" class="stats-link">
+                                    <a href="#" class="stats-link" data-bs-toggle="modal" data-bs-target="#statsModal">
                                         <span class="stats-icon">📊</span> View Stats
                                     </a>
                                 </td>
@@ -202,23 +374,11 @@
                                 <td>5</td>
                                 <td>92%</td>
                                 <td>
-                                    <a href="#" class="stats-link">
+                                    <a href="#" class="stats-link" data-bs-toggle="modal" data-bs-target="#statsModal">
                                         <span class="stats-icon">📊</span> View Stats
                                     </a>
                                 </td>
                             </tr>
-                            <tr>
-                              <td>Mikeeeeeeeee Johnson</td>
-                              <td>60</td>
-                              <td>55</td>
-                              <td>5</td>
-                              <td>92%</td>
-                              <td>
-                                  <a href="#" class="stats-link">
-                                      <span class="stats-icon">📊</span> View Stats
-                                  </a>
-                              </td>
-                          </tr>
                         </tbody>
                     </table>
                 </div>
@@ -226,21 +386,77 @@
         </div>
     </div>
 
-    <!-- Chart Scripts -->
+    <!-- Modal -->
+    <div class="modal fade" id="statsModal" tabindex="-1" aria-labelledby="statsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="statsModalLabel">Performance Stats</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <canvas id="histogram"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
     <script>
-        // Pie Chart
+        // Pie chart for task distribution (Completed vs Pending)
         const pieCtx = document.getElementById('pieChart').getContext('2d');
-        new Chart(pieCtx, {
+        const pieChart = new Chart(pieCtx, {
             type: 'pie',
             data: {
                 labels: ['Completed', 'Pending'],
                 datasets: [{
-                    data: [120, 30],
-                    backgroundColor: ['#007bff', '#6c757d']
+                    label: 'Task Status',
+                    data: [120, 30], // Example data
+                    backgroundColor: ['#007bff', '#343a40'] // Blue for Completed, Blackish for Pending
+                }]
+            }
+        });
+
+        // Daily task completion graph
+        const dailyTaskCtx = document.getElementById('dailyTaskChart').getContext('2d');
+        const dailyTaskChart = new Chart(dailyTaskCtx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+                datasets: [{
+                    label: 'Tasks Completed',
+                    data: [15, 30, 25, 40, 35],
+                    borderColor: '#007bff',
+                    backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                    fill: true
+                }]
+            }
+        });
+
+        // Histogram for Performance Stats in Modal
+        const histogramCtx = document.getElementById('histogram').getContext('2d');
+        const histogram = new Chart(histogramCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Performance', 'Work Rate', 'Time'],
+                datasets: [{
+                    label: 'Metrics',
+                    data: [90, 80, 70], // Example data
+                    backgroundColor: ['#007bff', '#343a40', '#28a745'],
+                    borderColor: ['#007bff', '#343a40', '#28a745'],
+                    borderWidth: 1
                 }]
             },
             options: {
-                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
             }
         });
     </script>
