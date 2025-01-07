@@ -610,66 +610,7 @@ function getDayOfWeek(date) {
     });
 
 
-    // const taskData = {
-    //     "2024-12-29": 5,  // 5 tasks completed on 2024-12-29
-    //     "2024-12-30": 2,  // 2 tasks completed on 2024-12-30
-    //     "2024-12-31": 8,  // 8 tasks completed on 2024-12-31
-    //     // Add more dates and task counts as needed
-    // };
-
-    // // Initialize Chart.js for the task completion graph
-    // const ctx = document.getElementById("dailyTaskChart").getContext("2d");
-    // const dailyTaskChart = new Chart(ctx, {
-    //     type: "bar", // Using a bar chart for task completion
-    //     data: {
-    //         labels: ["Tasks Completed"], // Default label
-    //         datasets: [{
-    //             label: "Completed Tasks",
-    //             data: [0], // Default data (no tasks)
-    //             backgroundColor: "rgba(75, 192, 192, 0.2)",
-    //             borderColor: "rgba(75, 192, 192, 1)",
-    //             borderWidth: 1
-    //         }]
-    //     },
-    //     options: {
-    //         responsive: true,
-    //         scales: {
-    //             y: {
-    //                 beginAtZero: true
-    //             }
-    //         }
-    //     }
-    // });
-
-    // // Function to get the day of the week from the selected date
-    // function getDayOfWeek(date) {
-    //     const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    //     const dayIndex = new Date(date).getDay();
-    //     return daysOfWeek[dayIndex];
-    // }
-
-    // // Initialize Flatpickr for calendar
-    // flatpickr("#calendar", {
-    //     dateFormat: "Y-m-d",  // Format of the selected date
-    //     onChange: function(selectedDates, dateStr, instance) {
-    //         // Update the "day" field with the selected day
-    //         const dayOfWeek = getDayOfWeek(dateStr);
-    //         document.getElementById("day").value = dayOfWeek;
-
-    //         // Update the graph based on the selected date
-    //         updateGraph(dateStr);
-    //     }
-    // });
-
-    // // Function to update the graph with the task completion data
-    // function updateGraph(date) {
-    //     const tasksCompleted = taskData[date] || 0; // Default to 0 if no data for the date
-
-    //     // Update the chart data
-    //     dailyTaskChart.data.datasets[0].data = [tasksCompleted];
-    //     dailyTaskChart.update();
-    // }
-
+    
 
 
     </script>
