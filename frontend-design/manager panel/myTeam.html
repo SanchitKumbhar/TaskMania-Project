@@ -1,132 +1,621 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-
-    <!-- Bootstrap CSS -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Profile</title>
     <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
     />
+    <style>
+      .manager:hover {
+        background-color: rgb(63, 69, 39);
+      }
 
-    <title>manager panel</title>
+      .section:hover {
+        background-color: rgb(200, 200, 200);
+        color: white;
+      }
+
+      .capsule {
+        border: 1px solid #ddd;
+        border-radius: 25px;
+        padding: 5px 15px;
+        margin-bottom: 10px;
+        display: inline-block;
+        background-color: #f8f9fa;
+      }
+
+      .three-dots {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        cursor: pointer;
+      }
+
+      .three-dots-menu {
+        position: absolute;
+        top: 35px;
+        right: 15px;
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        display: none;
+      }
+
+      .three-dots-menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .three-dots-menu ul li {
+        padding: 10px;
+        cursor: pointer;
+      }
+
+      .three-dots-menu ul li:hover {
+        background-color: #f1f1f1;
+      }
+
+      /* Centering content in the right panel */
+      .profile-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        /* height: 100%; */
+        flex-grow: 1;
+      }
+
+      .profile-container img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+      }
+
+      .profile-container h3 {
+        margin-top: 15px;
+      }
+
+      .profile-container p {
+        color: #6c757d;
+      }
+
+      #profilePic {
+        width: 10rem;
+        height: 10rem;
+      }
+
+      .workload-performance-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        /* Space between the two sections */
+        margin-bottom: 20px;
+        border: 2px solid rgb(173, 172, 172);
+        padding: 30px;
+        margin: 20px;
+        border-radius: 10px;
+      }
+
+      .workload-section {
+        width: 48%;
+        /* Adjust width to fit both sections side by side */
+      }
+
+      .performance-section {
+        width: 48%;
+        /* Adjust width to fit both sections side by side */
+      }
+
+      .beaker-container {
+        position: relative;
+        width: 20rem;
+        /* Width greater than height */
+        height: 200px;
+        /* Adjust the height to your liking */
+        border: 2px solid rgb(173, 172, 172);
+        border-radius: 10px;
+        /* Rounded top corners to simulate an open beaker */
+        background-color: transparent;
+        /* Transparent background inside */
+        display: flex;
+        justify-content: center;
+        align-items: last baseline;
+        margin-left: 60px;
+      }
+
+      .workload-level {
+        width: 100%;
+        /* Full width of the beaker */
+        background-color: rgba(54, 162, 235, 0.6);
+        border-radius: 0 0 10px 10px;
+        /* Rounded bottom corners for the fill */
+      }
+
+      .current-working-tasks {
+        border: 2px solid rgb(173, 172, 172);
+        padding: 30px;
+        margin: 20px;
+        border-radius: 10px;
+      }
+
+      /* Styling for the task status section */
+      .table {
+        margin-top: 20px;
+      }
+
+      .table th,
+      .table td {
+        text-align: center;
+        vertical-align: middle;
+      }
+
+      .table th {
+        background-color: #f8f9fa;
+      }
+
+      .btn-outline-primary {
+        margin-right: 10px;
+      }
+
+      .task-status {
+        border: 2px solid rgb(173, 172, 172);
+        padding: 30px;
+        margin: 20px;
+        border-radius: 10px;
+      }
+
+      .left-panel,
+      .right-panel {
+        height: 100%;
+        overflow-y: auto;
+        /* Enables independent scrolling */
+        margin-top: 60px;
+      }
+
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #333;
+        color: white;
+        padding: 10px;
+        z-index: 10;
+      }
+
+      .container {
+        display: flex;
+        margin-top: 50px;
+        /* Adjust for navbar height */
+        height: calc(100vh - 50px);
+      }
+    </style>
   </head>
+
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <a class="navbar-brand mr-5" href="#" style="font-size: 1.4rem;">
-        <img
-          src="logo.png"
-          width="30"
-          height="30"
-          class="d-inline-block align-center"
-          alt=""
-        />
-        TaskMania
-      </a>
-
-      <!-- <form class="form-inline my-2 my-lg-0">
-        <input
-          class="form-control mr-sm-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">
-          Search
-        </button>
-      </form> -->
-
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="../manager panel/dashboard.html" style="font-size: 1.1rem"
-              >Dashboard <span class="sr-only">(current)</span></a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../manager panel/projects.html" style="font-size: 1.1rem"
-              >Projects</a
-            >
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="../manager panel/tasks.html" style="font-size: 1.1rem">Tasks</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="../manager panel/notifications.html" style="font-size: 1.1rem"
-              >Notifications
-              <span class="badge badge-pill badge-light">1</span></a
-            >
-          </li>
-
-          <li class="nav-item active">
-            <a class="nav-link" href="myTeam.html" style="font-size: 1.1rem">My Team</a>
-          </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0 mr-auto">
-          <input
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-            style="width: 300px"
-          />
-          <button class="btn btn-outline-light my-2 my-sm-0" type="submit">
-            Search
-          </button>
-        </form>
-
-        <a class="navbar-brand" href="#">
-          <img
-            src="profile.png"
-            width="40"
-            height="40"
-            alt="Profile Logo"
-            class="rounded-circle"
-            style="width: 40px; height: 40px; object-fit: cover"
-          />
-        </a>
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark bg-primary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">My Team</a>
       </div>
     </nav>
 
-    
+    <!-- Container -->
+    <div class="container-fluid vh-100">
+      <div class="row h-100">
+        <!-- Left Panel -->
+        <div class="col-md-4 col-12 border-end py-3 left-panel">
+          <div
+            class="d-flex align-items-center mb-3 p-2 border rounded text-white bg-primary manager"
+            role="button"
+            onclick="showProfile('manager')"
+          >
+            <img
+              src="https://via.placeholder.com/80"
+              class="rounded-circle me-3"
+              alt="Manager"
+            />
+            <div>
+              <h5 class="mb-0">John Doe</h5>
+              <p class="text-muted mb-0">Manager</p>
+            </div>
+          </div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script
-      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
-      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-      crossorigin="anonymous"
-    ></script>
+          <div
+            class="d-flex align-items-center mb-3 p-2 border rounded section"
+            role="button"
+            onclick="showProfile('alice')"
+          >
+            <img
+              src="https://via.placeholder.com/80"
+              class="rounded-circle me-3"
+              alt="Alice"
+            />
+            <div>
+              <h5 class="mb-0">Alice Smith</h5>
+              <p class="text-muted mb-0">Software Developer</p>
+            </div>
+          </div>
+
+          <div
+            class="d-flex align-items-center mb-3 p-2 border rounded section"
+            role="button"
+            onclick="showProfile('maddy')"
+          >
+            <img
+              src="https://via.placeholder.com/80"
+              class="rounded-circle me-3"
+              alt="Maddy"
+            />
+            <div>
+              <h5 class="mb-0">Maddy Rodriego</h5>
+              <p class="text-muted mb-0">Software Developer</p>
+            </div>
+          </div>
+
+          <div
+            class="d-flex align-items-center mb-3 p-2 border rounded section"
+            role="button"
+            onclick="showProfile('jane')"
+          >
+            <img
+              src="https://via.placeholder.com/80"
+              class="rounded-circle me-3"
+              alt="Jane"
+            />
+            <div>
+              <h5 class="mb-0">Jane stanley</h5>
+              <p class="text-muted mb-0">Software Developer</p>
+            </div>
+          </div>
+
+          <div
+            class="d-flex align-items-center mb-3 p-2 border rounded section"
+            role="button"
+            onclick="showProfile('joe')"
+          >
+            <img
+              src="https://via.placeholder.com/80"
+              class="rounded-circle me-3"
+              alt="Joe"
+            />
+            <div>
+              <h5 class="mb-0">Joe Smith</h5>
+              <p class="text-muted mb-0">Software Developer</p>
+            </div>
+          </div>
+
+          <div
+            class="d-flex align-items-center mb-3 p-2 border rounded section"
+            role="button"
+            onclick="showProfile('ralf')"
+          >
+            <img
+              src="https://via.placeholder.com/80"
+              class="rounded-circle me-3"
+              alt="Ralf"
+            />
+            <div>
+              <h5 class="mb-0">Ralf Parker</h5>
+              <p class="text-muted mb-0">Software Developer</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Panel (Desktop) -->
+        <div
+          class="col-md-8 d-flex flex-column justify-content-start align-items-start position-relative right-panel"
+          id="profileDetailsDesktop"
+        >
+          <!-- Three Dots Menu -->
+          <div class="three-dots" onclick="toggleMenu()">&#x22EE;</div>
+          <div class="three-dots-menu" id="threeDotsMenu">
+            <ul>
+              <li onclick="assignTask()">Assign Task</li>
+              <li onclick="deleteTeamMember()">Delete Team Member</li>
+            </ul>
+          </div>
+
+          <!-- Profile Details -->
+          <div class="p-4 w-100">
+            <div class="profile-container">
+              <img
+                src="https://via.placeholder.com/80"
+                id="profilePic"
+                class="rounded-circle"
+                alt="Profile Picture"
+              />
+              <h3 id="desktopName">Click a profile</h3>
+              <p id="desktopPosition" class="text-muted">
+                Details will appear here.
+              </p>
+            </div>
+
+            <!-- Workload and Performance Metrics Section -->
+            <div class="workload-performance-container">
+              <!-- Workload Section -->
+              <div class="workload-section">
+                <h5>Workload</h5>
+                <div class="beaker-container">
+                  <div class="workload-level" style="height: 70%"></div>
+                  <!-- Set the height based on the workload percentage -->
+                </div>
+              </div>
+
+              <!-- Performance Section -->
+              <div class="performance-section">
+                <h5>Performance Metrics</h5>
+                <canvas id="performanceChart" width="400" height="200"></canvas>
+              </div>
+            </div>
+
+            <!-- Currently Working Tasks Section -->
+            <div class="mb-4 current-working-tasks">
+              <h5>Currently Working Tasks</h5>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Task</th>
+                    <th>Completion</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Task 1</td>
+                    <td>
+                      <div class="progress" style="height: 10px">
+                        <div
+                          class="progress-bar"
+                          role="progressbar"
+                          style="width: 50%"
+                          aria-valuenow="50"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        ></div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Task 2</td>
+                    <td>
+                      <div class="progress" style="height: 10px">
+                        <div
+                          class="progress-bar"
+                          role="progressbar"
+                          style="width: 80%"
+                          aria-valuenow="80"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        ></div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Task 3</td>
+                    <td>
+                      <div class="progress" style="height: 10px">
+                        <div
+                          class="progress-bar"
+                          role="progressbar"
+                          style="width: 30%"
+                          aria-valuenow="30"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        ></div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Task Status Section -->
+            <div class="mb-4 task-status">
+              <h5>Task Status</h5>
+
+              <!-- Sort Dropdown Button aligned to the right -->
+              <div class="d-flex justify-content-between mb-3">
+                <div class="ms-auto">
+                  <div class="dropdown">
+                    <button
+                      class="btn btn-outline-primary dropdown-toggle"
+                      type="button"
+                      id="sortDropdown"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Sort by Status
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          href="#"
+                          onclick="sortByStatus('Pending')"
+                          >Pending</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          href="#"
+                          onclick="sortByStatus('Not Accepted')"
+                          >Not Accepted</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          href="#"
+                          onclick="sortByStatus('Accepted')"
+                          >Accepted</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          href="#"
+                          onclick="sortByStatus('Completed')"
+                          >Completed</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Task Status Table -->
+              <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Task</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="taskStatusTable">
+                    <tr>
+                      <td>Task 1</td>
+                      <td>Accepted</td>
+                    </tr>
+                    <tr>
+                      <td>Task 2</td>
+                      <td>Completed</td>
+                    </tr>
+                    <tr>
+                      <td>Task 3</td>
+                      <td>Pending</td>
+                    </tr>
+                    <tr>
+                      <td>Task 4</td>
+                      <td>Not Accepted</td>
+                    </tr>
+                    <tr>
+                      <td>Task 5</td>
+                      <td>Completed</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      function showProfile(profile) {
+        let profileName = "";
+        let profilePosition = "";
+        let profilePic = "";
+
+        switch (profile) {
+          case "manager":
+            profileName = "John Doe";
+            profilePosition =
+              "Manager - Leads the team and oversees all projects.";
+            profilePic = "https://via.placeholder.com/80"; // Replace with actual image URL
+            break;
+          case "alice":
+            profileName = "Alice Smith";
+            profilePosition =
+              "Software Developer - Responsible for writing and maintaining code.";
+            profilePic = "https://via.placeholder.com/80"; // Replace with actual image URL
+            break;
+          case "maddy":
+            profileName = "Maddy Rodriego";
+            profilePosition =
+              "Software Developer - Responsible for writing and maintaining code.";
+            profilePic = "https://via.placeholder.com/80"; // Replace with actual image URL
+            break;
+          case "jane":
+            profileName = "Jane Stanley";
+            profilePosition =
+              "Software Developer - Responsible for writing and maintaining code.";
+            profilePic = "https://via.placeholder.com/80"; // Replace with actual image URL
+            break;
+          case "joe":
+            profileName = "Joe Smith";
+            profilePosition =
+              "Software Developer - Responsible for writing and maintaining code.";
+            profilePic = "https://via.placeholder.com/80"; // Replace with actual image URL
+            break;
+          case "ralf":
+            profileName = "Ralf Parker";
+            profilePosition =
+              "Software Developer - Responsible for writing and maintaining code.";
+            profilePic = "https://via.placeholder.com/80"; // Replace with actual image URL
+            break;
+        }
+
+        document.getElementById("desktopName").innerText = profileName;
+        document.getElementById("desktopPosition").innerText = profilePosition;
+        document.getElementById("profilePic").src = profilePic;
+      }
+
+      function toggleMenu() {
+        const menu = document.getElementById("threeDotsMenu");
+        menu.style.display = menu.style.display === "block" ? "none" : "block";
+      }
+
+      function assignTask() {
+        alert("Assign Task clicked");
+      }
+
+      function deleteTeamMember() {
+        alert("Delete Team Member clicked");
+      }
+
+      const ctx = document.getElementById("performanceChart").getContext("2d");
+      const performanceChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: ["Workrate", "Time", "Accuracy", "Efficiency"],
+          datasets: [
+            {
+              label: "Performance Metrics",
+              data: [80, 70, 75, 85],
+              backgroundColor: "rgba(54, 162, 235, 0.6)",
+              borderColor: "rgba(54, 162, 235, 1)",
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+
+      // <script>
+      function sortByStatus(status) {
+        const table = document.getElementById("taskStatusTable");
+        const rows = Array.from(table.rows); // Get all rows
+
+        // Sort the rows based on the selected status
+        rows.sort((rowA, rowB) => {
+          const statusA = rowA.cells[1].textContent.trim();
+          const statusB = rowB.cells[1].textContent.trim();
+
+          // If the status matches the selected status, place it at the top
+          if (statusA === status && statusB !== status) return -1;
+          if (statusB === status && statusA !== status) return 1;
+
+          return 0;
+        });
+
+        // Append sorted rows back into the table body
+        rows.forEach((row) => table.appendChild(row));
+      }
+    </script>
   </body>
 </html>
