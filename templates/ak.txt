@@ -5,7 +5,6 @@ task forwarding(completed)
 badges based in progress and completion statistics
 workload page i.e admin can see the workload provided to a particular employee and his progress at the same time
 
-
 employee panel:
 task visvualize
 submition
