@@ -100,33 +100,25 @@
                   <tr>
                     <th>Task ID</th>
                     <th>Task Name</th>
-                    <th>Assigned To</th>
-                    <th>Submission Date</th>
-                    <th>Status</th>
+                    <th>Task Description</th>
+                    <th>Alloted to</th>
+                    <th>Deadline</th>
+                    {% comment %} <th>Files</th> {% endcomment %}
                   </tr>
                 </thead>
                 <tbody>
+                  {% for i in data %}
                   <tr>
-                    <td>1</td>
-                    <td>Design Homepage</td>
-                    <td>John Doe</td>
-                    <td>2024-12-10</td>
-                    <td>Completed</td>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{ i.task }}</td>
+                    <td>{{ i.taskDesc }}</td>
+                    <td>{{ i.user.profilename }}</td>
+                    <td>{{ i.date }}</td>
+                    {% comment %} <td>{{ i.adminfiles }}</td> {% endcomment %}
+            
                   </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Fix Login Bug</td>
-                    <td>Jane Smith</td>
-                    <td>2024-12-11</td>
-                    <td>Submitted</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>Update API</td>
-                    <td>Tom Johnson</td>
-                    <td>2024-12-12</td>
-                    <td>Completed</td>
-                  </tr>
+                  {% endfor %}
+
                 </tbody>
               </table>
             </div>

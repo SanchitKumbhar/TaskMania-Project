@@ -33,13 +33,14 @@ def position(request):
 
 
 def index(request):
-    # if request.user.is_anonymous:
-    return render(request, 'index.html')
-    # else:
-    #     if not request.user.is_staff:
-    #         return redirect('/employee_panel')
-    #     else:
-    #         return redirect('/manager_panel')
+    if request.user.is_anonymous:
+        return render(request, 'index.html',{
+    })
+    else:
+        if Profile.objects.get(user=request.user).position == "Employee":
+            return redirect('/employee')
+        else:
+            return redirect('/manager-panel')
 
 
 def Authentication(request):
@@ -217,9 +218,7 @@ def organizeSort(tasknames, deadlines):
     arrangement = []
     for i in range():
         arrangement.append(dates[0]-date_object)
-    new_arrangement=sorted(arrangement)
-
-
+    new_arrangement = sorted(arrangement)
 
 
 def employee_panel(request):
@@ -238,7 +237,7 @@ def employee_panel(request):
 
             # organizeSort(tasknames, deadlines)
             print(user_data)
-            
+
             if request.method == "POST":
                 task = request.POST.get("task")
                 deadline = request.POST.get("date")
@@ -271,7 +270,6 @@ def visualization(request):
             # filepathname = fileobj.url(filepathname)
             # data = Todo.objects.filter()
             non_staff_users = User.objects.filter(is_staff=False)
-
 
     return render(request, 'Emptable.html', {'data': non_staff_users})
 
@@ -321,35 +319,44 @@ def manager(request):
                 user = User.objects.get(username=employeename)
                 empuser = Profile.objects.get(user=user)
                 Todo.objects.create(
-                    task=taskname, taskDesc=taskDesc, user=empuser, date=date,admin=request.user)
+                    task=taskname, taskDesc=taskDesc, user=empuser, date=date, admin=request.user)
         else:
             return HttpResponse("You are a Employee")
-    emp=Profile.objects.filter(position="Employee")
+    emp = Profile.objects.filter(position="Employee")
     print(emp)
     return render(request, 'managerpanel.html', {'emp': Profile.objects.filter(position="Employee")})
 
+
 def TaskForward(request):
-    data=Todo.objects.filter(admin=request.user)
-    emp=Profile.objects.filter(position="Employee")
-    return render(request,"task-forward.html",{'data' : data,'emp':emp})
+    data = Todo.objects.filter(admin=request.user)
+    emp = Profile.objects.filter(position="Employee")
+    return render(request, "task-forward.html", {'data': data, 'emp': emp})
+
 
 def forwardTaskapi(request):
-    if request.method=="POST":
-        id=json.loads(request.body)
-        data=id.get("id")
-        emp=id.get("emp")
+    if request.method == "POST":
+        id = json.loads(request.body)
+        data = id.get("id")
+        emp = id.get("emp")
 
-    instance=Todo.objects.get(id=data)
-    emp=User.objects.get(username=emp)
-    profinsatnce=Profile.objects.get(user=emp)
-    instance.user=profinsatnce        
+    instance = Todo.objects.get(id=data)
+    emp = User.objects.get(username=emp)
+    profinsatnce = Profile.objects.get(user=emp)
+    instance.user = profinsatnce
     instance.save()
 
     return JsonResponse({
-        'success' : "ok"
+        'success': "ok"
     })
+
 
 def showTasksinfo(request):
     pass
     # allTasks=Todo.objects.all()
     # return JsonResponse({'data':allTasks})
+
+
+def allTasks(request):
+    return render(request, "taskcompleted.html", {
+        'data': Todo.objects.all()
+    })
