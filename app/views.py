@@ -324,8 +324,9 @@ def manager(request):
                     task=taskname, taskDesc=taskDesc, user=empuser, date=date,admin=request.user)
         else:
             return HttpResponse("You are a Employee")
-
-    return render(request, 'managerpanel.html', {'emp': Profile.objects.all()})
+    emp=Profile.objects.filter(position="Employee")
+    print(emp)
+    return render(request, 'managerpanel.html', {'emp': Profile.objects.filter(position="Employee")})
 
 def TaskForward(request):
     data=Todo.objects.filter(admin=request.user)

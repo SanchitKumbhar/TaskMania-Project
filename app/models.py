@@ -16,21 +16,6 @@ class Profile(models.Model):
     # photo=models.FileField(upload_to='file/', blank=True, null=True)
 
 
-
-# class Todo(models.Model):
-#     task = models.CharField(max_length=100)
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     date=models.DateField()
-#     Time=models.TimeField(default=time(12, 0))
-#     status = models.BooleanField(default=False)  # Default value set to True
-#     emp_date=models.DateField(null=True)
-#     emp_Time=models.TimeField(null=True)
-#     compare_date=models.DateField(default=get_default_start_date)
-#     compare_time=models.TimeField(default=time(12, 0))
-
-#     def __str__(self):
-#         return self.task
-
 class Todo(models.Model):
     task = models.CharField(max_length=100)
     taskDesc=models.TextField(null=True,default="none")
@@ -39,7 +24,8 @@ class Todo(models.Model):
     date=models.DateField(default=get_default_start_date)
     status = models.BooleanField(default=False)  # Default value set to True
     emp_date=models.DateField(default=get_default_start_date)
-    file = models.FileField(upload_to='documents/')
+    file = models.FileField(upload_to='submitted-documents/',null=True)
+    adminfiles=models.FileField(upload_to='admin-documents/',null=True)
 
     # compare_date=models.DateField(default=get_default_start_date)
 

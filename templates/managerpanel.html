@@ -102,7 +102,7 @@
 
   <div class="container">
     <h2 class="header">Task Assignment</h2>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <!-- Task Name -->
       <div class="mb-3">
@@ -112,8 +112,7 @@
       <!-- Task Description -->
       <div class="mb-3">
         <label for="taskDescription" class="form-label">Task Description</label>
-        <textarea name="taskDesc" class="form-control" id="taskDescription" rows="4" placeholder="Describe the task"
-          required></textarea>
+        <textarea name="taskDesc" class="form-control" id="taskDescription" rows="4" placeholder="Describe the task" required></textarea>
       </div>
       <!-- Select Employee -->
       <div class="mb-3">
@@ -121,7 +120,7 @@
         <select name="employee" class="form-select select-employee" id="employeeSelect" required>
           <option selected disabled>Select Employee</option>
           {% for index in emp %}
-          <option value={{index.user}}>{{index.user}}</option>
+          <option value="{{ index.user }}">{{ index.user }}</option>
           {% endfor %}
         </select>
       </div>
@@ -129,6 +128,11 @@
       <div class="mb-3">
         <label for="deadline" class="form-label">Deadline</label>
         <input name="date" type="date" class="form-control" id="deadline" required>
+      </div>
+      <!-- File Upload -->
+      <div class="mb-3">
+        <label for="taskFile" class="form-label">Upload File</label>
+        <input name="taskFile" type="file" class="form-control" id="taskFile">
       </div>
       <!-- Submit Button -->
       <button type="submit" class="btn btn-primary w-100">Assign Task</button>
