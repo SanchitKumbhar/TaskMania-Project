@@ -62,122 +62,7 @@ def profilepage(request):
     return render(request, "profile.html")
 
 
-def signup_manager(request):
-    if request.method == 'POST':
-        uname = request.POST.get('username')
-        eml = request.POST.get('email')
-        passcode = request.POST.get('password')
-        user = User.objects.create_user(uname, eml, passcode)
-        user.save()
-        login(request, user)
-        return redirect('/')
-    else:
-        pass
-        return redirect("/profile")
 
-
-def loginpage(request):
-    if request.method == "POST":
-        username = request.POST.get('username')
-        Email = request.POST.get('Email')
-        Password = request.POST.get('password')
-
-        # check if user has entered correct credentials
-        user = authenticate(username=username, password=Password)
-
-        if user is not None:
-            print("ok")
-            # A backend authenticated the credentials
-            login(request, user)
-            position(request)
-            if position(request):
-                return redirect("/manager-panel")
-            else:
-                return redirect("/employee-panel")
-    return render(request, "login-page.html")
-
-
-def signuppage(request):
-    if request.method == 'POST':
-        uname = request.POST.get('username')
-        eml = request.POST.get('email')
-        passcode = request.POST.get('password')
-        user = User.objects.create_user(uname, eml, passcode)
-        user.save()
-        login(request, user)
-        return redirect('/profile')
-    return render(request, "signup-page.html")
-
-
-def managerloginpage(request):
-    return render(request, "loginpage-manager.html")
-
-
-def employeelogin(request):
-    return render(request, "loginpage-employee.html")
-
-
-def managerlogin(request):
-    if request.method == "POST":
-        username = request.POST.get('username')
-        Email = request.POST.get('Email')
-        Password = request.POST.get('Password')
-
-        # check if user has entered correct credentials
-        user = authenticate(username=username, password=Password)
-
-        if user is not None:
-            # A backend authenticated the credentials
-            login(request, user)
-            return redirect('/manager')
-            # return HttpResponse("Loged in")
-
-        # return HttpResponse("lzbfhbsdf")
-
-
-def signup_employee(request):
-    if request.method == 'POST':
-        uname = request.POST.get('username')
-        eml = request.POST.get('email')
-        passcode = request.POST.get('password')
-        uploaded_file = request.FILES['file']
-        # fileobj = FileSystemStorage()
-        # filepathname = fileobj.save(uploaded_file.name, uploaded_file)
-        user = User.objects.create_user(uname, eml, passcode)
-
-        user.save()
-
-        login(request, user)
-        Profile(file=uploaded_file, user=request.user).save()
-        return redirect('employee_panel')
-    # else:
-    #     return redirect('employee')
-
-
-def loginuser_employee(request):
-    if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        print(username, password)
-
-        # check if user has entered correct credentials
-        user = authenticate(username=username, password=password)
-
-        if user is not None:
-            # A backend authenticated the credentials
-            login(request, user)
-            return redirect('/employee_panel')
-
-        else:
-            # No backend authenticated the credentials
-            return redirect('/employee')
-
-    # return render(request, 'login_employee.html')
-
-
-def logoutuser(request):
-    logout(request)
-    return redirect("/")
 
 
 def delete(request, id):
@@ -300,7 +185,7 @@ def subvisualization(request, username):
 
 
 def employee(request):
-    return render(request, 'employee.html')
+    return render(request, 'employeepanel.html')
 
 
 def manager(request):

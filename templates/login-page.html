@@ -105,7 +105,7 @@
     
     <div class="login-card">
         <div class="login-header">Welcome Back</div>
-        <form method="post">
+        <form method="post" action= "/auth/login">
           {% csrf_token %}
             <div class="mb-4">
                 <label for="email" class="form-label">Email Address</label>
@@ -125,7 +125,7 @@
             <button type="submit" class="btn btn-primary w-100">Login</button>
         </form>
         <div class="login-footer">
-            <span class="form-text">Don't have an account? <a href="/signup-page" class="text-decoration-none">Sign Up</a></span>
+            <span class="form-text">Don't have an account? <a href="/auth/signup-page" class="text-decoration-none">Sign Up</a></span>
         </div>
     </div>
 
