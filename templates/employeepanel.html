@@ -209,6 +209,7 @@
                                     <th>Task Name</th>
                                     <th>Description</th>
                                     <th>Deadline</th>
+                                    <th>Admin File</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -222,6 +223,15 @@
                                         <div class="d-flex align-items-center">
                                             <i class="bi bi-calendar4-week me-2 text-muted small"></i>{{i.date}}
                                         </div>
+                                    </td>
+                                    <td>
+                                        {% if i.adminfiles %}
+                                            <a href="{{ i.adminfiles.url }}" class="text-decoration-none" download>
+                                                <i class="bi bi-paperclip me-1"></i>Download
+                                            </a>
+                                        {% else %}
+                                            <span class="text-muted small">No File</span>
+                                        {% endif %}
                                     </td>
                                     <td>
                                         {% if i.status == False %}

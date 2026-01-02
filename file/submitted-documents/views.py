@@ -263,10 +263,10 @@ def manager(request):
                     user=empuser,
                     date=date_val,
                     admin=request.user,
-                    adminfiles=file
+                    file=file
                 )
                 print(empuser.user.email)
-                send_safe_email(f"{empuser.user.email}", "New Task Assignment", html_content, text_content)
+                # send_safe_email(f"{empuser.user.email}", "New Task Assignment", html_content, text_content)
             except (User.DoesNotExist, Profile.DoesNotExist):
                 return HttpResponse("Employee not found", status=404)
             
