@@ -7,10 +7,56 @@ from django.contrib.auth import login, authenticate, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 from app.models import *
+import smtplib
+import ssl
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.utils import formatdate, make_msgid
 
+# zhvw yjzr pjep gkax 
+# CONFIGURATION
+SMTP_SERVER = "smtp.gmail.com" # or smtp.office365.com, smtp.mail.yahoo.com
+SMTP_PORT = 587
+SENDER_EMAIL = "sanchitskumbhar@gmail.com" # Must match the App Password account
+APP_PASSWORD = "zhvwyjzrpjepgkax" # Your 16-character App Password (remove spaces if needed)
 # =========================================
 # Authentication & Setup Views
 # =========================================
+
+def send_safe_email(receiver_email, subject, body_html, body_text):
+    # 1. Create the container
+    msg = MIMEMultipart("alternative")
+    msg["Subject"] = subject
+    msg["From"] = SENDER_EMAIL
+    msg["To"] = receiver_email
+    msg["Date"] = formatdate(localtime=True)
+    msg["Message-ID"] = make_msgid()
+
+    # 2. Attach both Plain Text and HTML versions
+    # This is crucial. Spam filters hate HTML-only emails.
+    part1 = MIMEText(body_text, "plain")
+    part2 = MIMEText(body_html, "html")
+    msg.attach(part1)
+    msg.attach(part2)
+
+    # 3. Send the email
+    context = ssl.create_default_context()
+    try:
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.ehlo() 
+            server.starttls(context=context) # Secure the connection
+            server.ehlo()
+            server.login(SENDER_EMAIL, APP_PASSWORD)
+            server.sendmail(SENDER_EMAIL, receiver_email, msg.as_string())
+        print(f"Email sent successfully to {receiver_email}")
+    except Exception as e:
+        print(f"Error: {e}")
+
+# USAGE
+html_content = "<h1>Task Assigned</h1><p>You have a new task in TaskMania.</p><br><a href='https://sanchitkumbhar26.pythonanywhere.com/'>Check your tasks</a>"
+text_content = "Task Assigned. You have a new task in TaskMania."
+
+
 
 def renderlogin(request):
     return render(request, "login-page.html")
@@ -218,8 +264,11 @@ def manager(request):
                     date=date_val, 
                     admin=request.user
                 )
+                print(empuser.user.email)
+                send_safe_email(f"{empuser.user.email}", "New Task Assignment", html_content, text_content)
             except (User.DoesNotExist, Profile.DoesNotExist):
                 return HttpResponse("Employee not found", status=404)
+            
         
         # --- NEW CODE STARTS HERE ---
         
