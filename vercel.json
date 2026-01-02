@@ -1,6 +1,3 @@
-# Vercel Python (Django) deployment configuration
-# See: https://vercel.com/docs/deployments/configure-a-project/project-configuration for details
-
 {
   "version": 2,
   "builds": [
