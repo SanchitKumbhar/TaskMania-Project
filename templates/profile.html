@@ -3,160 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Profile Page</title>
+    <title>Edit Profile - TaskMania</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
     <style>
+        :root {
+            --primary-color: #4f46e5; /* Indigo */
+            --primary-hover: #4338ca;
+            --text-color: #1e293b;
+            --text-muted: #64748b;
+            --bg-gradient: radial-gradient(circle at top right, #eef2ff, #ffffff 60%);
+        }
+
         body {
-            font-family: 'Roboto', sans-serif;
-            background: #f4f7fc;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
             min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
             padding: 20px;
+            color: var(--text-color);
         }
 
-        .card {
+        .profile-container {
             width: 100%;
             max-width: 600px;
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
-            background: #fff;
         }
 
-        .card-header {
-            background: linear-gradient(135deg, #007bff, #0056b3);
-            border-radius: 12px 12px 0 0;
-            color: white;
+        /* Card Styling */
+        .profile-card {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decorative Header Line */
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-color), #8b5cf6);
+        }
+
+        .form-header {
             text-align: center;
-            font-size: 1.8rem;
-            font-weight: bold;
-            padding: 20px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
         }
 
+        .form-header h2 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.75rem;
+            margin-bottom: 5px;
+        }
+
+        .form-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Image Upload Area */
+        .image-upload-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .img-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #e0e7ff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+            background-color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #cbd5e1;
+            font-size: 3rem;
+        }
+
+        .file-upload-btn {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .file-upload-btn input[type="file"] {
+            position: absolute;
+            font-size: 100px;
+            opacity: 0;
+            right: 0;
+            top: 0;
+            cursor: pointer;
+        }
+
+        /* Form Controls */
         .form-label {
-            font-weight: 600;
+            font-weight: 500;
             font-size: 0.9rem;
-            color: #555;
+            margin-bottom: 8px;
+            color: var(--text-color);
         }
 
         .form-control, .form-select {
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            background: #fafafa;
-            box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1);
-            transition: all 0.2s ease;
+            border-radius: 10px;
+            padding: 12px 15px;
+            border: 1px solid #cbd5e1;
+            font-size: 0.95rem;
+            transition: all 0.2s;
         }
 
         .form-control:focus, .form-select:focus {
-            border-color: #007bff;
-            box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.2);
-            background: #fff;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
         }
 
-        .form-control-file {
-            display: block;
-            margin-top: 8px;
+        /* Input Group Icons */
+        .input-group-text {
+            background: transparent;
+            border-right: none;
+            border-color: #cbd5e1;
+            border-radius: 10px 0 0 10px;
+            color: var(--text-muted);
+        }
+        .input-group .form-control, .input-group .form-select {
+            border-left: none;
+            border-radius: 0 10px 10px 0;
+        }
+        .input-group:focus-within .input-group-text {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
         }
 
+        /* Button */
         .btn-primary {
-            background-color: #007bff;
+            background-color: var(--primary-color);
             border: none;
-            padding: 10px 15px;
-            font-size: 1rem;
+            border-radius: 50px;
+            padding: 12px 30px;
             font-weight: 600;
-            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
             transition: all 0.3s ease;
             width: 100%;
+            margin-top: 10px;
         }
 
         .btn-primary:hover {
-            background-color: #0056b3;
-            transform: translateY(-1px);
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.4);
         }
 
-        .footer-text {
-            font-size: 0.85rem;
-            color: #777;
+        .footer-link {
             text-align: center;
             margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        .footer-link a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-link a:hover {
+            color: var(--primary-color);
         }
 
-        .form-group img-preview {
-            margin-top: 15px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .img-preview img {
-            width: 120px;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 50%;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        @media (max-width: 768px) {
-            .card-header {
-                font-size: 1.5rem;
-                padding: 15px;
-            }
-        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                Professional Profile
-            </div>
-            <div class="card-body p-4">
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <!-- Image Upload -->
-                    <div class="mb-4">
-                        <label for="profileImage" class="form-label">Profile Image</label>
-                        <input type="file" name="photo" id="profileImage" class="form-control form-control-file" accept="image/*">
-                    </div>
+    
+    <div class="profile-container">
+        <div class="mb-3">
+            <a href="#" class="text-decoration-none text-muted fw-medium small">
+                <i class="bi bi-arrow-left me-1"></i> Back to Dashboard
+            </a>
+        </div>
 
-                    <!-- Profile Name -->
-                    <div class="mb-4">
-                        <label for="profileName" class="form-label">Profile Name</label>
-                        <input type="text" name="profilename" id="profileName" class="form-control" placeholder="Enter your profile name">
+        <div class="profile-card">
+            <div class="form-header">
+                <h2>Professional Profile</h2>
+                <p>Manage your public information and role.</p>
+            </div>
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="image-upload-wrapper">
+                    <div class="img-preview" id="previewContainer">
+                        <i class="bi bi-person-fill"></i>
                     </div>
-                    <!-- Phone Number -->
-                    <div class="mb-4">
-                        <label for="phoneNumber" class="form-label">Phone Number</label>
-                        <input type="tel" id="phoneNumber" name="phonenumber" class="form-control" placeholder="Enter your phone number">
+                    
+                    <div class="btn btn-outline-primary btn-sm file-upload-btn rounded-pill px-4">
+                        <i class="bi bi-camera me-2"></i>Change Photo
+                        <input type="file" name="photo" id="profileImage" accept="image/*" onchange="previewImage(event)">
                     </div>
-                    <!-- Position -->
-                    <div class="mb-4">
-                        <label for="position" class="form-label">Position</label>
+                    <div class="form-text mt-2 text-center">Recommended: Square JPG, PNG.</div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="profileName" class="form-label">Full Name</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person-vcard"></i></span>
+                        <input type="text" name="profilename" id="profileName" class="form-control" placeholder="e.g. John Doe">
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="phoneNumber" class="form-label">Phone Number</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                        <input type="tel" id="phoneNumber" name="phonenumber" class="form-control" placeholder="+1 (555) 000-0000">
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="position" class="form-label">Role / Position</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-briefcase"></i></span>
                         <select id="position" name="position" class="form-select">
                             <option value="" disabled selected>Select your position</option>
                             <option value="Employee">Employee</option>
                             <option value="Manager">Manager</option>
                         </select>
                     </div>
-                    <!-- Submit Button -->
-                    <button type="submit" class="btn btn-primary">Save Profile</button>
-                </form>
-            </div>
-            <div class="footer-text">
-                Designed with professionalism and precision.
-            </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-lg me-2"></i>Save Changes
+                </button>
+            </form>
+        </div>
+        
+        <div class="footer-link">
+            <a href="#">TaskMania Inc. &copy; 2024</a>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function(){
+                const output = document.getElementById('previewContainer');
+                // Replace the icon with the image
+                output.innerHTML = `<img src="${reader.result}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
+            };
+            if(event.target.files[0]) {
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        }
+    </script>
 </body>
 </html>

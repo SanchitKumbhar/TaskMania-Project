@@ -1,0 +1,18 @@
+# Vercel Python (Django) deployment configuration
+# See: https://vercel.com/docs/deployments/configure-a-project/project-configuration for details
+
+{
+  "version": 2,
+  "builds": [
+    { "src": "manage.py", "use": "@vercel/python", "config": { "maxLambdaSize": "50mb" } }
+  ],
+  "routes": [
+    { "src": "/static/(.*)", "dest": "/static/$1" },
+    { "src": "/media/(.*)", "dest": "/media/$1" },
+    { "src": "/(.*)", "dest": "/manage.py" }
+  ],
+  "env": {
+    "DJANGO_SETTINGS_MODULE": "project.settings",
+    "PYTHONUNBUFFERED": "1"
+  }
+}
